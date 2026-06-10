@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skill Maps — Transformation Telco Cloud</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300&display=swap');
+  :root {
+    --bg:#0A0C10;--surface:#111318;--surface2:#181C24;--border:#1E2433;
+    --red:#CC2936;--red-dim:#7A1520;--cyan:#00B4D8;--cyan-dim:#004D5E;
+    --gold:#F5A623;--green:#3FB950;--purple:#8B5CF6;
+    --text:#CDD9E5;--text-dim:#636E7B;--text-bright:#F0F4F8;
+    --vendor:#E85D6A;--operator:#3FB950;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;font-size:14px;line-height:1.6;min-height:100vh}
+
+  /* ── Header ── */
+  header{border-bottom:1px solid var(--border);padding:18px 32px 14px;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;position:sticky;top:0;background:var(--bg);z-index:100}
+  .header-left h1{font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;color:var(--cyan);letter-spacing:.08em;text-transform:uppercase}
+  .header-left p{font-size:11px;color:var(--text-dim);margin-top:2px;font-style:italic}
+  .legend{display:flex;gap:16px;align-items:center;flex-wrap:wrap;font-size:11px;color:var(--text-dim);padding-top:2px}
+  .legend-item{display:flex;align-items:center;gap:5px}
+  .legend-dot{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+
+  /* ── Layout ── */
+  .app{display:grid;grid-template-columns:210px 1fr;min-height:calc(100vh - 65px)}
+  nav{border-right:1px solid var(--border);padding:12px 0;position:sticky;top:65px;height:calc(100vh - 65px);overflow-y:auto}
+  .nav-group-title{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);padding:10px 14px 5px}
+  .nav-item{display:flex;align-items:center;gap:9px;padding:7px 14px;cursor:pointer;border-left:2px solid transparent;transition:all .15s;font-size:12px;color:var(--text-dim)}
+  .nav-item:hover{color:var(--text-bright);background:var(--surface)}
+  .nav-item.active{color:var(--text-bright);border-left-color:var(--cyan);background:var(--surface)}
+  .nav-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+  main{padding:28px 32px;overflow-y:auto}
+
+  /* ── Card & tabs ── */
+  .role-card{display:none;animation:fadeIn .2s ease}
+  .role-card.visible{display:block}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+
+  /* ── Tab bar ── */
+  .tab-bar{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:24px}
+  .tab-btn{padding:8px 20px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;color:var(--text-dim);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s;background:none;border-top:none;border-left:none;border-right:none}
+  .tab-btn:hover{color:var(--text-bright)}
+  .tab-btn.active{color:var(--cyan);border-bottom-color:var(--cyan)}
+  .tab-pane{display:none}
+  .tab-pane.active{display:block;animation:fadeIn .15s ease}
+
+  /* ── Role header ── */
+  .role-header{margin-bottom:20px}
+  .role-layer{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:5px}
+  .role-title{font-size:24px;font-weight:700;color:var(--text-bright);line-height:1.2;margin-bottom:6px}
+  .role-subtitle{font-size:12px;color:var(--text-dim);font-style:italic;max-width:680px}
+
+  /* ── PI shift ── */
+  .pi-shift{display:inline-flex;align-items:center;gap:8px;background:rgba(204,41,54,.12);border:1px solid var(--red-dim);border-radius:4px;padding:5px 10px;font-size:11px;color:var(--vendor);margin-bottom:20px;flex-wrap:wrap}
+  .pi-shift .to{color:var(--operator)}
+
+  /* ── Delta ── */
+  .delta-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+  .delta-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px 14px;text-align:center}
+  .delta-number{font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:600;line-height:1;margin-bottom:3px}
+  .delta-label{font-size:10px;color:var(--text-dim)}
+
+  /* ── Skills grid ── */
+  .skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+  .skills-col{background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+  .skills-col-header{padding:9px 14px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:7px}
+  .col-before .skills-col-header{background:rgba(204,41,54,.08);border-bottom:1px solid var(--red-dim);color:var(--vendor)}
+  .col-after .skills-col-header{background:rgba(63,185,80,.08);border-bottom:1px solid rgba(63,185,80,.3);color:var(--operator)}
+  .skill-list{padding:10px 0;list-style:none}
+  .skill-item{padding:5px 14px;display:flex;align-items:flex-start;gap:9px;font-size:12px}
+  .skill-item:hover{background:var(--surface2)}
+  .skill-level{width:28px;height:3px;border-radius:2px;margin-top:7px;flex-shrink:0}
+  .skill-name{flex:1;color:var(--text)}
+  .skill-tag{font-size:9px;padding:1px 5px;border-radius:3px;font-family:'IBM Plex Mono',monospace;flex-shrink:0;margin-top:2px}
+  .tag-core{background:rgba(0,180,216,.15);color:var(--cyan)}
+  .tag-new{background:rgba(63,185,80,.15);color:var(--green)}
+  .tag-drop{background:rgba(204,41,54,.15);color:var(--vendor);text-decoration:line-through}
+  .tag-up{background:rgba(245,166,35,.15);color:var(--gold)}
+
+  /* ── Transfer ── */
+  .transfer-block{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--red);border-radius:6px;padding:14px 18px;margin-bottom:18px}
+  .transfer-block h3{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--vendor);margin-bottom:10px}
+  .transfer-items{display:flex;flex-wrap:wrap;gap:7px}
+  .transfer-item{background:rgba(204,41,54,.08);border:1px solid var(--red-dim);border-radius:4px;padding:4px 9px;font-size:11px;color:var(--text);display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+  .from-label{font-size:9px;color:var(--vendor);font-family:'IBM Plex Mono',monospace}
+  .to-label{font-size:9px;color:var(--operator);font-family:'IBM Plex Mono',monospace}
+
+  /* ── Posture ── */
+  .posture-block{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:14px 18px;font-size:12px;color:var(--text-dim);font-style:italic;line-height:1.7}
+  .posture-block strong{color:var(--text);font-style:normal}
+
+  /* ── Radar tab ── */
+  .radar-wrapper{display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap}
+  .radar-svg-container{flex-shrink:0}
+  .radar-legend{flex:1;min-width:240px}
+  .radar-legend-title{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:12px}
+  .radar-axis-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .radar-axis-item{display:flex;align-items:center;gap:10px;font-size:12px}
+  .radar-axis-num{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);width:18px;text-align:right;flex-shrink:0}
+  .radar-axis-name{flex:1;color:var(--text)}
+  .radar-bar-wrap{width:100px;height:6px;background:var(--border);border-radius:3px;flex-shrink:0;position:relative}
+  .radar-bar-before{height:6px;border-radius:3px 0 0 3px;background:var(--vendor);opacity:.7;position:absolute;top:0;left:0}
+  .radar-bar-after{height:6px;border-radius:3px;background:var(--operator);position:absolute;top:0;left:0}
+  .radar-vals{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-dim);white-space:nowrap}
+  .radar-key{display:flex;gap:20px;margin-top:20px;font-size:11px}
+  .radar-key-item{display:flex;align-items:center;gap:7px}
+  .radar-key-line{width:24px;height:3px;border-radius:2px}
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar{width:4px}
+  ::-webkit-scrollbar-track{background:transparent}
+  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <h1>Skill Maps — Transformation Telco Cloud</h1>
+    <p>Avant VNF/VM → Après CNF/CaaS · Transfert prime integrator vendor → opérateur</p>
+  </div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#3FB950"></div>Nouveau</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#F5A623"></div>Montant</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#00B4D8"></div>Core stable</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#CC2936"></div>Recul</div>
+    <div class="legend-item" style="gap:7px;padding-left:10px;border-left:1px solid #1E2433">
+      <span style="color:#E85D6A;font-size:11px">VENDOR</span>
+      <span style="color:#636E7B">→</span>
+      <span style="color:#3FB950;font-size:11px">OPÉRATEUR</span>
+    </div>
+  </div>
+</header>
+
+<div class="app">
+  <nav id="sidebar"></nav>
+  <main id="content"></main>
+</div>
+
+<script>
+// ── Data ──────────────────────────────────────────────────────────────────────
+// radar: 6 axes métier, score avant/après sur 5
+const ROLES = [
+  {
+    id:"dc-ops", group:"Infrastructure Physique", color:"#8B5CF6",
+    title:"Infra DC / Bare-metal Ops",
+    subtitle:"Opération des salles, alimentation, câblage, serveurs COTS — fondation physique du CaaS",
+    piShift:"Intégration HW/SW (Nokia AirFrame, Ericsson Cloud RAN) → Orange assume la qualification COTS",
+    before:[
+      {name:"Gestion salles & baies (alim., refroid., câblage)",tag:"core"},
+      {name:"Serveurs dédiés per-NF (sizing Nokia/Ericsson)",tag:"drop"},
+      {name:"IPMI / iDRAC / ILO — gestion out-of-band",tag:"core"},
+      {name:"VLAN statiques, segmentation L2 fixe",tag:"drop"},
+      {name:"Provisioning manuel PXE/Kickstart ad-hoc",tag:"drop"},
+      {name:"Câblage ToR classique (accès/distribution)",tag:"core"},
+    ],
+    after:[
+      {name:"COTS qualification (DELL/HPE/SuperMicro) — cycle Orange",tag:"up"},
+      {name:"Redfish API — gestion out-of-band programmable",tag:"new"},
+      {name:"Metal³ / Cluster API bare-metal — provisioning déclaratif",tag:"new"},
+      {name:"SR-IOV, DPDK, Hugepages — tuning CNF réseau",tag:"new"},
+      {name:"Firmware management as code (Ansible)",tag:"new"},
+      {name:"Câblage ToR structuré pour BGP (spine/leaf)",tag:"up"},
+    ],
+    vendorTransfer:[
+      {resp:"Sizing matériel per-NF",from:"Nokia/Ericsson",to:"Orange Infra"},
+      {resp:"Qualification HW/SW combinée",from:"Vendor",to:"Orange + CNCF"},
+      {resp:"PXE/provisioning initial",from:"Vendor PS",to:"Orange Ops"},
+    ],
+    delta:{new:3,up:2,drop:3},
+    posture:"<strong>Avant :</strong> Le DC Ops attendait les specs hardware du vendor. <strong>Après :</strong> il co-définit l'architecture COTS, maîtrise l'API Redfish, alimente Metal³. Il devient garant de la couche physique comme plateforme, pas comme support passif de boîtes noires vendor.",
+    radar:{
+      axes:["Infra physique","Automatisation","Réseau physique","Sécurité HW","Orchestration","Qualification COTS"],
+      before:[5,2,4,3,1,3],
+      after: [5,4,4,4,4,5],
+    }
+  },
+  {
+    id:"reseau-ip", group:"Infrastructure Physique", color:"#8B5CF6",
+    title:"Réseau IP / Transport",
+    subtitle:"Backbone IP/MPLS, interfaces NF, connectivité inter-DC et accès RAN",
+    piShift:"Configuration réseau NF (Nokia/Ericsson) → Orange configure les interfaces CNF via NetworkAttachmentDefinition",
+    before:[
+      {name:"BGP/OSPF/MPLS — routing cœur",tag:"core"},
+      {name:"VLAN/QinQ — segmentation VNF",tag:"drop"},
+      {name:"Configuration statique interfaces VNF (CR vendor)",tag:"drop"},
+      {name:"VRRP/HSRP — redondance L3 classique",tag:"drop"},
+      {name:"Firewall stateful périmétrique",tag:"core"},
+      {name:"Wireshark/TCPdump — debug ad-hoc",tag:"core"},
+    ],
+    after:[
+      {name:"BGP EVPN/VXLAN — underlay CNF fabric",tag:"up"},
+      {name:"Multus CNI + NetworkAttachmentDefinition (SR-IOV/MACVLAN)",tag:"new"},
+      {name:"Calico/Cilium eBPF — réseau K8s compris",tag:"new"},
+      {name:"Network Policy K8s — segmentation déclarative",tag:"new"},
+      {name:"Service mesh basique (Istio awareness)",tag:"new"},
+      {name:"Observabilité réseau : eBPF flow, Hubble",tag:"new"},
+    ],
+    vendorTransfer:[
+      {resp:"Config interfaces NF (N2/N3/N6)",from:"Nokia/Ericsson PS",to:"Orange Réseau"},
+      {resp:"VRF/routing per-NF",from:"Vendor",to:"Orange — GitOps réseau"},
+      {resp:"Debug trafic NF",from:"TAC vendor",to:"Orange SRE"},
+    ],
+    delta:{new:4,up:1,drop:3},
+    posture:"<strong>Avant :</strong> Le réseau IP configurait des VLANs et attendait les CRs vendor. <strong>Après :</strong> il doit comprendre la couche CNI de Kubernetes, écrire des NetworkAttachmentDefinitions et intégrer le réseau dans le pipeline GitOps.",
+    radar:{
+      axes:["Routing IP/MPLS","CNI K8s","Segmentation","Observabilité réseau","Automatisation","Debug dataplane"],
+      before:[5,1,4,2,2,3],
+      after: [5,5,4,4,3,4],
+    }
+  },
+  {
+    id:"caas-ops", group:"Plateforme CaaS", color:"#00B4D8",
+    title:"Plateforme CaaS / K8s Ops",
+    subtitle:"Opération de la plateforme K8s/OCP — le nouveau système d'exploitation de l'infra Telco",
+    piShift:"Gestion cycle de vie cluster (par Vendor PS) → Orange opère, upgrade, maintient OCP/vanilla K8s",
+    before:[
+      {name:"OpenStack — Nova, Neutron, Cinder",tag:"drop"},
+      {name:"Hyperviseur KVM/VMware",tag:"drop"},
+      {name:"Heat templates / orchestration",tag:"drop"},
+      {name:"Tacker VNFM — lifecycle VNF",tag:"drop"},
+      {name:"Administration système Linux RHEL",tag:"core"},
+      {name:"Réseaux virtuels OpenStack (OVN, OVS)",tag:"drop"},
+    ],
+    after:[
+      {name:"Kubernetes — architecture complète (apiserver, etcd, scheduler)",tag:"new"},
+      {name:"OCP — opération cluster, Machine Config Operator",tag:"new"},
+      {name:"Cluster API — provisioning déclaratif multi-provider",tag:"new"},
+      {name:"ACM (Advanced Cluster Management) — multi-cluster",tag:"new"},
+      {name:"CRI-O / containerd — runtime containers",tag:"new"},
+      {name:"Upgrades K8s/OCP — lifecycle rolling, day-2 ops",tag:"new"},
+    ],
+    vendorTransfer:[
+      {resp:"Upgrades plateforme VIM",from:"Nokia CBIS / NSC",to:"Orange CaaS Ops"},
+      {resp:"Dimensionnement et scaling",from:"Vendor PS",to:"Orange Platform Eng"},
+      {resp:"Maintenance cluster control plane",from:"Vendor SLA",to:"Orange interne"},
+    ],
+    delta:{new:6,up:0,drop:5},
+    posture:"<strong>Avant :</strong> Ce rôle opérait OpenStack livré et maintenu avec le vendor. <strong>Après :</strong> il opère K8s/OCP comme un produit ingénierique — etcd, CRDs, Machine Config Operator, upgrades sur 1500+ nœuds sans fenêtre de maintenance vendor. C'est le rôle qui absorbe le plus de charge du transfert prime integrator.",
+    radar:{
+      axes:["Orchestration containers","Multi-cluster","Day-2 ops","Automatisation","Linux/système","Networking K8s"],
+      before:[1,1,2,2,4,2],
+      after: [5,5,5,5,4,4],
+    }
+  },
+  {
+    id:"storage-ops", group:"Plateforme CaaS", color:"#00B4D8",
+    title:"Stockage / SDS",
+    subtitle:"Persistance pour les CNF stateful — ODF/Ceph, CSI, performances NVMe",
+    piShift:"SAN/NAS dédié NF livré vendor → Orange déploie et opère ODF/Ceph comme service CaaS",
+    before:[
+      {name:"SAN (FC/iSCSI) — LUN management",tag:"drop"},
+      {name:"NFS — export volumes VNF",tag:"drop"},
+      {name:"Ceph basics (RADOS, pools)",tag:"up"},
+      {name:"Backup/restore snapshots traditionnels",tag:"core"},
+    ],
+    after:[
+      {name:"ODF/Ceph — opération complète (OSDs, MONs, MGR)",tag:"up"},
+      {name:"CSI Driver — provisionnement dynamique PVC/PV",tag:"new"},
+      {name:"StorageClass K8s — tiering (NVMe/SSD/HDD)",tag:"new"},
+      {name:"Performance NVMe pour CNF latence-sensible (UPF/AMF)",tag:"new"},
+      {name:"Velero — backup K8s stateful",tag:"new"},
+    ],
+    vendorTransfer:[
+      {resp:"SAN dédié per-NF",from:"Vendor/NetApp",to:"Orange SDS"},
+      {resp:"Dimensionnement I/O NF",from:"Vendor PS",to:"Orange Storage Ops"},
+    ],
+    delta:{new:3,up:2,drop:2},
+    posture:"<strong>Avant :</strong> Storage gérait des LUNs SAN dédiées par NF sur specs vendor. <strong>Après :</strong> il opère ODF/Ceph comme service partagé multi-tenant, expose des StorageClass au CaaS, et doit comprendre les contraintes I/O des CNF stateful (UPF, AMF).",
+    radar:{
+      axes:["SDS/Ceph","CSI K8s","Performance I/O","Backup K8s","Sizing NF","Multi-tenant"],
+      before:[2,1,3,3,3,2],
+      after: [5,5,5,4,4,4],
+    }
+  },
+  {
+    id:"cicd-platform", group:"Delivery & CI/CD", color:"#F5A623",
+    title:"CI/CD / Platform Engineer",
+    subtitle:"Pipeline de livraison CNF — GitOps, ArgoCD/Flux, Helm, registries OCI air-gap",
+    piShift:"Intégration et livraison NF assurée par Vendor PS → Orange construit et opère le pipeline complet",
+    before:[
+      {name:"Scripts Bash/Python de déploiement ad-hoc",tag:"drop"},
+      {name:"Ansible — configuration management",tag:"core"},
+      {name:"Jenkins basique (pas de GitOps)",tag:"drop"},
+      {name:"Procédures manuelles de rollback",tag:"drop"},
+    ],
+    after:[
+      {name:"GitLab CI — pipeline multi-stage, runners on OCP",tag:"new"},
+      {name:"Helm — authoring charts, values-files multi-vendor",tag:"new"},
+      {name:"ArgoCD / Flux — GitOps sync, ApplicationSet",tag:"new"},
+      {name:"Harbor / Quay — registry OCI air-gap, image signing",tag:"new"},
+      {name:"Vault — gestion secrets PKI/TLS CNF",tag:"new"},
+      {name:"Cosign / Sigstore — signature artefacts ANSSI",tag:"new"},
+    ],
+    vendorTransfer:[
+      {resp:"Packaging et livraison NF",from:"Nokia/Ericsson PS",to:"Orange CI/CD"},
+      {resp:"Tests d'intégration inter-NF",from:"Vendor",to:"Orange pipeline"},
+      {resp:"Gestion des dépendances chart",from:"Vendor",to:"Orange Helm"},
+    ],
+    delta:{new:6,up:0,drop:3},
+    posture:"<strong>Ce rôle n'existait quasiment pas avant.</strong> Dans le monde VNF, le vendor livrait ses packages et ses procédures. Post-CNF, Orange construit et maintient un pipeline de bout-en-bout — du commit Git au nœud RAN — pour Nokia, Ericsson et Mavenir simultanément.",
+    radar:{
+      axes:["GitOps","Helm/packaging","Registry OCI","Secrets Mgmt","Pipeline CI","Supply chain sec."],
+      before:[1,1,1,1,2,1],
+      after: [5,5,4,4,5,4],
+    }
+  },
+  {
+    id:"release-manager", group:"Delivery & CI/CD", color:"#F5A623",
+    title:"Release Manager / Intégration Vendor",
+    subtitle:"Coordination des releases NF, compatibilité CaaS/CNF, contractualisation CNTT",
+    piShift:"Release management assumé par vendor → Orange coordonne les upgrades cross-vendor sur sa plateforme",
+    before:[
+      {name:"Suivi planning releases Nokia/Ericsson",tag:"core"},
+      {name:"Coordination CR/gel config avant upgrade",tag:"core"},
+      {name:"Test en environnement vendor (lab externe)",tag:"drop"},
+      {name:"Gestion des fenêtres maintenance longues",tag:"drop"},
+    ],
+    after:[
+      {name:"Matrice compatibilité CNF / CaaS / K8s version",tag:"up"},
+      {name:"Semantic versioning, Helm chart versioning",tag:"new"},
+      {name:"Test en staging OCP interne Orange",tag:"up"},
+      {name:"Canary / blue-green deployment pour NF critiques",tag:"new"},
+      {name:"RFP : clauses CNTT/Anuket, API-first contractuel",tag:"new"},
+    ],
+    vendorTransfer:[
+      {resp:"Plan d'upgrade NF",from:"Vendor PS",to:"Orange Release Mgr"},
+      {resp:"Tests de non-régression inter-NF",from:"Vendor lab",to:"Orange staging"},
+      {resp:"Décision go/no-go upgrade",from:"Vendor + Orange co-décision",to:"Orange seul"},
+    ],
+    delta:{new:3,up:2,drop:2},
+    posture:"<strong>Avant :</strong> Le Release Manager suivait le vendor. <strong>Après :</strong> il pilote la matrice de compatibilité entre 3+ vendors, la plateforme OCP et les 12+ NF du 5G Core. Il doit contractualiser les API et les cycles de release dès le RFP.",
+    radar:{
+      axes:["Pilotage releases","Compatibilité K8s","Lab interne","Versioning Helm","Contractuel CNTT","Canary/Blue-Green"],
+      before:[5,2,2,1,2,1],
+      after: [5,5,5,4,4,4],
+    }
+  },
+  {
+    id:"archi-solution", group:"Architecture CNF", color:"#CC2936",
+    title:"Architecte Solution 5G Core / RAN",
+    subtitle:"Conception des architectures NF sur la plateforme CaaS — du SBA au déploiement K8s",
+    piShift:"Architecture solution définie par vendor → Orange conçoit l'architecture bout-en-bout sur sa plateforme",
+    before:[
+      {name:"Architecture 4G/5G Core (AMF, SMF, UPF, UDM…)",tag:"core"},
+      {name:"Interfaces 3GPP (N1/N2/N3/N6/Xn)",tag:"core"},
+      {name:"Sizing NF sur VM (vCPU/RAM/NUMA)",tag:"drop"},
+      {name:"Architecture réseau overlay (OpenStack Neutron)",tag:"drop"},
+      {name:"HLD/LLD sur solutions Nokia/Ericsson packagées",tag:"drop"},
+    ],
+    after:[
+      {name:"Architecture CNF K8s : pods, replicas, affinité NUMA",tag:"new"},
+      {name:"Helm chart design pour NF (values, templates)",tag:"new"},
+      {name:"Performance dataplane : DPDK, SR-IOV pour UPF",tag:"up"},
+      {name:"Service mesh & mTLS entre NF (Istio/Cilium)",tag:"new"},
+      {name:"HLD sur architecture ouverte multi-vendor",tag:"up"},
+      {name:"Résilience K8s : PodDisruptionBudget, topology spread",tag:"new"},
+    ],
+    vendorTransfer:[
+      {resp:"HLD solution NF",from:"Nokia/Ericsson PS",to:"Orange Architecte"},
+      {resp:"Sizing et dimensionnement",from:"Vendor",to:"Orange Architecture"},
+      {resp:"Choix topologie déploiement",from:"Vendor packagé",to:"Orange design"},
+    ],
+    delta:{new:4,up:2,drop:3},
+    posture:"<strong>Avant :</strong> L'architecte validait les HLD du vendor. <strong>Après :</strong> il conçoit lui-même l'architecture de déploiement K8s des NF, maîtrise les contraintes NUMA/DPDK pour l'UPF, et écrit des HLD indépendants d'un packaging vendor unique.",
+    radar:{
+      axes:["5G Core/3GPP","Archi K8s","DPDK/Dataplane","Helm design","Résilience","Multi-vendor"],
+      before:[5,1,3,1,3,3],
+      after: [5,5,5,4,5,5],
+    }
+  },
+  {
+    id:"po-caas", group:"Architecture CNF", color:"#CC2936",
+    title:"Product Owner CaaS / NF",
+    subtitle:"Gouvernance du backlog plateforme CaaS, priorisation des capacités, interface vendor/équipes",
+    piShift:"Roadmap plateforme dictée par vendor → Orange pilote sa propre roadmap CaaS indépendante",
+    before:[
+      {name:"Gestion des demandes vers le vendor (CR, ticket)",tag:"drop"},
+      {name:"Suivi planning releases vendor",tag:"drop"},
+      {name:"Rédaction US fonctionnelles NF",tag:"core"},
+      {name:"Coordination MOA/MOE classique",tag:"core"},
+    ],
+    after:[
+      {name:"Backlog produit CaaS — priorisation capacités plateforme",tag:"new"},
+      {name:"Definition of Ready/Done technique (Helm, GitOps)",tag:"new"},
+      {name:"Pilotage OKR plateforme (lead time, DORA metrics)",tag:"new"},
+      {name:"Contractualisation technique RFP (CNTT, API-first)",tag:"new"},
+      {name:"Coordination multi-squad (Infra / CI-CD / NF)",tag:"up"},
+    ],
+    vendorTransfer:[
+      {resp:"Roadmap plateforme",from:"Nokia CBIS/NSC roadmap",to:"Orange PO CaaS"},
+      {resp:"Priorisation des features",from:"Vendor product",to:"Orange produit"},
+    ],
+    delta:{new:4,up:1,drop:2},
+    posture:"<strong>Avant :</strong> Le PO gérait les relations vendor et suivait ses livrables. <strong>Après :</strong> il est propriétaire d'un produit technique réel (la plateforme CaaS) avec des métriques DORA, des OKR, et la responsabilité de tenir le cap face aux demandes NF et contraintes ANSSI.",
+    radar:{
+      axes:["Backlog technique","DORA metrics","Contractuel RFP","Coordination squads","DoD technique","Indépendance vendor"],
+      before:[2,1,2,3,2,1],
+      after: [5,4,4,5,4,5],
+    }
+  },
+  {
+    id:"securite-anssi", group:"Rôles Transverses", color:"#3FB950",
+    title:"Sécurité / Conformité ANSSI",
+    subtitle:"Qualification des plateformes CNF, supply chain security, conformité SecNumCloud",
+    piShift:"Sécurité assurée par qualification vendor → Orange qualifie la stack ouverte composite",
+    before:[
+      {name:"Revue des dossiers de sécurité vendor (AQ)",tag:"core"},
+      {name:"Qualification ANSSI sur stack fermée Nokia/Ericsson",tag:"up"},
+      {name:"Firewall périmétrique classique",tag:"core"},
+      {name:"Audit VLAN/ACL réseau",tag:"drop"},
+    ],
+    after:[
+      {name:"Qualification ANSSI stack ouverte (OCP + Helm + OTel)",tag:"up"},
+      {name:"Supply chain security : SBOM, Cosign, Sigstore",tag:"new"},
+      {name:"Policy-as-code : OPA Gatekeeper, Kyverno",tag:"new"},
+      {name:"CVE management sur composants open source",tag:"new"},
+      {name:"Air-gap architecture — registry interne souverain",tag:"new"},
+      {name:"Secrets management : Vault + PKI interne",tag:"new"},
+    ],
+    vendorTransfer:[
+      {resp:"Qualification sécurité stack CNF",from:"Vendor certifié",to:"Orange Sécu + ANSSI"},
+      {resp:"Gestion CVE sur composants NF",from:"TAC vendor SLA",to:"Orange SecOps"},
+      {resp:"SBOM / supply chain",from:"Vendor opaque",to:"Orange — open source"},
+    ],
+    delta:{new:4,up:2,drop:1},
+    posture:"<strong>C'est le rôle le plus exposé au transfert de responsabilité.</strong> Dans le monde VNF, la qualification sécurité était portée par le vendor certifié ANSSI. Post-CNF, Orange qualifie une stack open source composite et gère un SBOM réel en conditions industrielles.",
+    radar:{
+      axes:["Qualification ANSSI","Supply chain sec.","Policy-as-code","CVE management","Air-gap","PKI/Vault"],
+      before:[4,1,1,2,2,2],
+      after: [5,5,5,5,5,5],
+    }
+  },
+  {
+    id:"sre-observabilite", group:"Rôles Transverses", color:"#3FB950",
+    title:"Observabilité / SRE",
+    subtitle:"Fiabilité de la plateforme CaaS et des CNF — SLO, alerting, incident response",
+    piShift:"Observabilité per-NF chez le vendor → Orange met en place l'observabilité unifiée multi-vendor",
+    before:[
+      {name:"Supervision SNMP/Syslog classique (Zabbix, Nagios)",tag:"drop"},
+      {name:"Métriques propriétaires Nokia (NetAct) / Ericsson (ENM)",tag:"drop"},
+      {name:"Gestion d'incidents par escalade vendor (P1/P2)",tag:"core"},
+      {name:"KPI réseau 4G/5G (throughput, latence, drop rate)",tag:"core"},
+    ],
+    after:[
+      {name:"Prometheus — PromQL, federation multi-cluster",tag:"new"},
+      {name:"Grafana — dashboards SLO/SLI, alerting",tag:"new"},
+      {name:"OpenTelemetry — traces distribués inter-CNF",tag:"new"},
+      {name:"Thanos / Mimir — rétention longue terme",tag:"new"},
+      {name:"SLO / Error budget — burn rate alerting",tag:"new"},
+      {name:"Incident response K8s — runbooks GitOps",tag:"new"},
+    ],
+    vendorTransfer:[
+      {resp:"Dashboard supervision NF",from:"Nokia NetAct / Ericsson ENM",to:"Orange Grafana"},
+      {resp:"Alerting KPI NF",from:"Vendor outil propriétaire",to:"Orange Prometheus"},
+      {resp:"Corrélation événements cross-NF",from:"TAC vendor",to:"Orange SRE"},
+    ],
+    delta:{new:5,up:0,drop:2},
+    posture:"<strong>Avant :</strong> Supervision via outils propriétaires vendor, escalade TAC pour incidents complexes. <strong>Après :</strong> Orange construit et opère sa propre stack d'observabilité unifiée — Prometheus + OTel + Grafana — capable de corréler des événements à travers des CNF multi-vendor.",
+    radar:{
+      axes:["Prometheus/PromQL","Tracing OTel","SLO/Error budget","Incident K8s","Grafana","Corrélation multi-NF"],
+      before:[1,1,1,1,2,2],
+      after: [5,4,5,5,5,5],
+    }
+  },
+  {
+    id:"vendor-manager", group:"Rôles Transverses", color:"#3FB950",
+    title:"Vendor Manager / RFP",
+    subtitle:"Pilotage Nokia/Ericsson/Mavenir, RFP techniques, contrats API-first",
+    piShift:"Relation vendor asymétrique (dépendance) → Orange impose des clauses techniques d'ouverture dans les RFP",
+    before:[
+      {name:"Négociation commerciale et SLA",tag:"core"},
+      {name:"Suivi plannings de livraison vendor",tag:"core"},
+      {name:"Rédaction RFP sur specs fonctionnelles",tag:"up"},
+      {name:"Escalade TAC et gestion des P1",tag:"core"},
+    ],
+    after:[
+      {name:"RFP avec clauses CNTT/Anuket — K8s conformance",tag:"up"},
+      {name:"Contractualisation API-first (pas de Helm propriétaire)",tag:"new"},
+      {name:"Évaluation technique Helm charts / OCI artefacts",tag:"new"},
+      {name:"SLA sur patches critiques CNF < 72h",tag:"new"},
+      {name:"Audit SBOM et supply chain contractuel",tag:"new"},
+      {name:"Benchmark multi-vendor sur plateforme commune Orange",tag:"new"},
+    ],
+    vendorTransfer:[
+      {resp:"Certification stack intégrée",from:"Vendor auto-certifié",to:"Orange RFP technique"},
+      {resp:"Standard d'interface",from:"Propriétaire vendor",to:"CNTT / Anuket contractuel"},
+    ],
+    delta:{new:4,up:2,drop:0},
+    posture:"<strong>C'est le rôle qui conditionne tous les autres.</strong> Si le Vendor Manager ne contractualise pas les API ouvertes, les charts Helm non-propriétaires et les SLA sur CVE dès le RFP, toute la transformation CNF reste exposée au lock-in.",
+    radar:{
+      axes:["Négociation SLA","Clauses CNTT/Anuket","Lecture technique Helm","Audit SBOM","Benchmark vendor","Contractuel API-first"],
+      before:[5,1,1,1,2,1],
+      after: [5,5,4,4,5,5],
+    }
+  },
+  {
+    id:"design-authority", group:"Rôles Transverses", color:"#3FB950",
+    title:"Design Authority / Architecte Senior",
+    subtitle:"Cohérence architecturale end-to-end, gouvernance technique, arbitrages plateforme vs NF",
+    piShift:"Architecture bout-en-bout définie vendor par vendor → Orange tient la cohérence de la stack complète",
+    before:[
+      {name:"HLD validation et gouvernance technique",tag:"core"},
+      {name:"Arbitrage inter-vendor (Nokia vs Ericsson)",tag:"core"},
+      {name:"Compatibilité inter-NF sur stack fermée",tag:"drop"},
+      {name:"Normes 3GPP / ETSI NFV",tag:"core"},
+    ],
+    after:[
+      {name:"Architecture CaaS end-to-end (bare-metal → CNF)",tag:"up"},
+      {name:"Gouvernance GitOps — standards Helm, chart repository",tag:"new"},
+      {name:"Matrice compatibilité K8s/OCP/CNF versions",tag:"new"},
+      {name:"TOGAF / ADR (Architecture Decision Records)",tag:"new"},
+      {name:"Stratégie open source — CNCF graduation, licences",tag:"new"},
+      {name:"Arbitrage lock-in (Vanilla K8s vs OCP vs vendor K8s)",tag:"new"},
+    ],
+    vendorTransfer:[
+      {resp:"Cohérence stack intégrée",from:"Vendor (solution packagée)",to:"Design Authority Orange"},
+      {resp:"Décision architecture plateforme",from:"Co-décision vendor",to:"Orange seul"},
+      {resp:"Gestion obsolescence composants",from:"Vendor roadmap",to:"Orange + CNCF"},
+    ],
+    delta:{new:4,up:2,drop:1},
+    posture:"<strong>C'est le rôle qui incarne le transfert prime integrator dans son entier.</strong> Avant, il validait. Après, il conçoit et gouverne une stack ouverte composite dont Orange est propriétaire. La maîtrise de la matrice de compatibilité, des ADRs et de la stratégie CNCF devient le cœur du rôle.",
+    radar:{
+      axes:["Gouvernance technique","Stratégie CNCF","ADR/TOGAF","Matrice compat.","GitOps governance","Arbitrage lock-in"],
+      before:[5,2,3,3,1,2],
+      after: [5,5,4,5,5,5],
+    }
+  },
+];
+
+// ── Radar SVG ──────────────────────────────────────────────────────────────
+function buildRadar(r, roleColor) {
+  const SIZE = 280, CX = 140, CY = 140, R = 110;
+  const N = r.axes.length;
+  const angles = r.axes.map((_, i) => (Math.PI * 2 * i / N) - Math.PI / 2);
+
+  function pt(val, i) {
+    const a = angles[i], rv = (val / 5) * R;
+    return [CX + rv * Math.cos(a), CY + rv * Math.sin(a)];
+  }
+
+  // Grid rings
+  let rings = '';
+  for (let lvl = 1; lvl <= 5; lvl++) {
+    const pts = angles.map((a) => {
+      const rv = (lvl / 5) * R;
+      return `${CX + rv * Math.cos(a)},${CY + rv * Math.sin(a)}`;
+    }).join(' ');
+    rings += `<polygon points="${pts}" fill="none" stroke="#1E2433" stroke-width="${lvl===5?1.5:0.8}"/>`;
+  }
+
+  // Axis lines
+  let axisLines = '';
+  angles.forEach(a => {
+    axisLines += `<line x1="${CX}" y1="${CY}" x2="${CX + R * Math.cos(a)}" y2="${CY + R * Math.sin(a)}" stroke="#1E2433" stroke-width="0.8"/>`;
+  });
+
+  // Before polygon
+  const bPts = r.before.map((v, i) => pt(v, i).join(',')).join(' ');
+  // After polygon
+  const aPts = r.after.map((v, i) => pt(v, i).join(',')).join(' ');
+
+  // Axis labels
+  let labels = '';
+  r.axes.forEach((ax, i) => {
+    const a = angles[i];
+    const lx = CX + (R + 18) * Math.cos(a);
+    const ly = CY + (R + 18) * Math.sin(a);
+    const anchor = Math.cos(a) > 0.1 ? 'start' : Math.cos(a) < -0.1 ? 'end' : 'middle';
+    labels += `<text x="${lx}" y="${ly}" text-anchor="${anchor}" dominant-baseline="middle" font-size="9" font-family="IBM Plex Mono,monospace" fill="#8B949E">${ax}</text>`;
+  });
+
+  // Dots on after
+  let dots = '';
+  r.after.forEach((v, i) => {
+    const [dx, dy] = pt(v, i);
+    dots += `<circle cx="${dx}" cy="${dy}" r="3" fill="${roleColor}" opacity="0.9"/>`;
+  });
+
+  return `<svg width="${SIZE}" height="${SIZE}" viewBox="0 0 ${SIZE} ${SIZE}" xmlns="http://www.w3.org/2000/svg">
+    <rect width="${SIZE}" height="${SIZE}" fill="#111318" rx="6"/>
+    ${rings}${axisLines}
+    <polygon points="${bPts}" fill="rgba(232,93,106,0.12)" stroke="#E85D6A" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <polygon points="${aPts}" fill="${roleColor}22" stroke="${roleColor}" stroke-width="2"/>
+    ${dots}${labels}
+  </svg>`;
+}
+
+// ── Render functions ──────────────────────────────────────────────────────
+const TAG_LABELS = {core:"CORE",new:"NOUVEAU",drop:"RECUL",up:"↑ MONTANT"};
+const lvlColors  = {core:'#00B4D8',new:'#3FB950',drop:'#CC2936',up:'#F5A623'};
+
+function skillRow(s) {
+  return `<li class="skill-item">
+    <div class="skill-level" style="background:${lvlColors[s.tag]||'#636E7B'}"></div>
+    <span class="skill-name">${s.name}</span>
+    <span class="skill-tag tag-${s.tag}">${TAG_LABELS[s.tag]}</span>
+  </li>`;
+}
+
+function renderCard(role) {
+  const transferItems = role.vendorTransfer.map(t => `
+    <div class="transfer-item">
+      <span>${t.resp}</span>
+      <span class="from-label">${t.from}</span>
+      <span style="color:#636E7B;font-size:11px">→</span>
+      <span class="to-label">${t.to}</span>
+    </div>`).join('');
+
+  const radarSvg = buildRadar(role.radar, role.color);
+
+  const radarAxisRows = role.radar.axes.map((ax, i) => {
+    const bw = Math.round((role.radar.before[i]/5)*100);
+    const aw = Math.round((role.radar.after[i]/5)*100);
+    return `<li class="radar-axis-item">
+      <span class="radar-axis-num">${i+1}</span>
+      <span class="radar-axis-name">${ax}</span>
+      <div class="radar-bar-wrap">
+        <div class="radar-bar-before" style="width:${bw}%"></div>
+        <div class="radar-bar-after" style="width:${aw}%;opacity:0.85"></div>
+      </div>
+      <span class="radar-vals">${role.radar.before[i]}/5 → ${role.radar.after[i]}/5</span>
+    </li>`;
+  }).join('');
+
+  return `<div class="role-card" id="card-${role.id}">
+    <div class="role-header">
+      <div class="role-layer">${role.group}</div>
+      <h2 class="role-title">${role.title}</h2>
+      <p class="role-subtitle">${role.subtitle}</p>
+    </div>
+    <div class="pi-shift">
+      <span style="font-size:10px;font-family:'IBM Plex Mono',monospace;letter-spacing:.08em">PRIME INTEGRATOR SHIFT</span>
+      <span style="color:#636E7B">→</span>
+      <span class="to">${role.piShift}</span>
+    </div>
+
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('${role.id}','detail',this)">Détail compétences</button>
+      <button class="tab-btn" onclick="switchTab('${role.id}','radar',this)">Radar avant / après</button>
+    </div>
+
+    <!-- DETAIL PANE -->
+    <div class="tab-pane active" id="tab-${role.id}-detail">
+      <div class="delta-row">
+        <div class="delta-card">
+          <div class="delta-number" style="color:#3FB950">${role.delta.new}</div>
+          <div class="delta-label">Compétences nouvelles</div>
+        </div>
+        <div class="delta-card">
+          <div class="delta-number" style="color:#F5A623">${role.delta.up}</div>
+          <div class="delta-label">Compétences montantes</div>
+        </div>
+        <div class="delta-card">
+          <div class="delta-number" style="color:#CC2936">${role.delta.drop}</div>
+          <div class="delta-label">Compétences en recul</div>
+        </div>
+      </div>
+      <div class="skills-grid">
+        <div class="skills-col col-before">
+          <div class="skills-col-header">⬛ Monde VNF / Avant</div>
+          <ul class="skill-list">${role.before.map(skillRow).join('')}</ul>
+        </div>
+        <div class="skills-col col-after">
+          <div class="skills-col-header">▶ Monde CNF / Après</div>
+          <ul class="skill-list">${role.after.map(skillRow).join('')}</ul>
+        </div>
+      </div>
+      <div class="transfer-block">
+        <h3>Responsabilités transférées du vendor vers l'opérateur</h3>
+        <div class="transfer-items">${transferItems}</div>
+      </div>
+      <div class="posture-block">${role.posture}</div>
+    </div>
+
+    <!-- RADAR PANE -->
+    <div class="tab-pane" id="tab-${role.id}-radar">
+      <div class="radar-wrapper">
+        <div class="radar-svg-container">${radarSvg}</div>
+        <div class="radar-legend">
+          <div class="radar-legend-title">Axes de compétence — scores /5</div>
+          <ul class="radar-axis-list">${radarAxisRows}</ul>
+          <div class="radar-key">
+            <div class="radar-key-item">
+              <div class="radar-key-line" style="background:#E85D6A;opacity:.7"></div>
+              <span style="color:#E85D6A">Avant (VNF)</span>
+            </div>
+            <div class="radar-key-item">
+              <div class="radar-key-line" style="background:${role.color}"></div>
+              <span style="color:${role.color}">Après (CNF)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function switchTab(roleId, pane, btn) {
+  const card = document.getElementById('card-' + roleId);
+  card.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  card.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + roleId + '-' + pane).classList.add('active');
+  btn.classList.add('active');
+}
+
+function renderNav() {
+  const sidebar = document.getElementById('sidebar');
+  let html = '', lastGroup = '';
+  ROLES.forEach((r, i) => {
+    if (r.group !== lastGroup) {
+      html += `<div class="nav-group-title">${r.group}</div>`;
+      lastGroup = r.group;
+    }
+    html += `<div class="nav-item${i===0?' active':''}" onclick="showRole('${r.id}',this)">
+      <div class="nav-dot" style="background:${r.color}"></div>
+      <span>${r.title}</span>
+    </div>`;
+  });
+  sidebar.innerHTML = html;
+}
+
+function showRole(id, el) {
+  document.querySelectorAll('.role-card').forEach(c => c.classList.remove('visible'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('card-' + id).classList.add('visible');
+  el.classList.add('active');
+}
+
+function init() {
+  renderNav();
+  document.getElementById('content').innerHTML = ROLES.map(renderCard).join('');
+  document.getElementById('card-' + ROLES[0].id).classList.add('visible');
+}
+
+init();
+</script>
+</body>
+</html>
