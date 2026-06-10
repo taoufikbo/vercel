@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Red Hat OpenShift AI — Décryptage Expert des Briques</title>
+<style>
+  :root {
+    --bg: #0F1624;
+    --bg-light: #162032;
+    --card: #1A2A3F;
+    --card-border: #1E3A5F;
+    --red: #CC0000;
+    --teal: #00B9CE;
+    --gold: #F5A623;
+    --green: #2ECC71;
+    --white: #FFFFFF;
+    --gray: #8B9BB4;
+    --gray-light: #C5D0E4;
+    --dark: #0A0F1A;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--white); font-family: 'Segoe UI', Calibri, sans-serif; line-height: 1.5; }
+
+  /* HERO */
+  .hero { background: var(--dark); border-left: 6px solid var(--red); padding: 56px 48px 40px; position: relative; overflow: hidden; }
+  .hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--teal); }
+  .hero-label { font-size: 11px; letter-spacing: 2px; color: var(--teal); text-transform: uppercase; margin-bottom: 12px; }
+  .hero h1 { font-size: 2.6rem; font-weight: 700; line-height: 1.1; margin-bottom: 10px; }
+  .hero h1 span { color: var(--teal); }
+  .hero-sub { font-size: 1.1rem; color: var(--gray-light); margin-bottom: 24px; }
+  .hero-axes { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+  .badge { background: var(--card); border: 1px solid var(--card-border); color: var(--gray-light); padding: 4px 12px; border-radius: 3px; font-size: 12px; }
+  .badge.teal { border-color: var(--teal); color: var(--teal); }
+  .hero-filrouge { background: rgba(245,166,35,0.08); border: 1px solid var(--gold); border-radius: 4px; padding: 14px 18px; font-size: 13px; color: var(--gray-light); }
+  .hero-filrouge strong { color: var(--gold); }
+
+  /* SECTION */
+  .section { padding: 48px 48px 0; }
+  .section-title { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: var(--teal); margin-bottom: 20px; }
+  h2 { font-size: 1.4rem; color: var(--white); margin-bottom: 6px; }
+  .section-sub { font-size: 13px; color: var(--gray); margin-bottom: 28px; }
+
+  /* CARDS GRID */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 40px; }
+  .card { background: var(--card); border: 1px solid var(--card-border); border-radius: 4px; padding: 18px; position: relative; overflow: hidden; transition: border-color 0.2s; }
+  .card:hover { border-color: var(--teal); }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .card.teal::before { background: var(--teal); }
+  .card.green::before { background: var(--green); }
+  .card.gold::before { background: var(--gold); }
+  .card.red::before { background: var(--red); }
+  .card-tag { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+  .card.teal .card-tag { color: var(--teal); }
+  .card.green .card-tag { color: var(--green); }
+  .card.gold .card-tag { color: var(--gold); }
+  .card.red .card-tag { color: #E63030; }
+  .card h3 { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+  .card p { font-size: 12px; color: var(--gray-light); line-height: 1.5; }
+  .card-sub { font-size: 11px; color: var(--gray); margin-top: 8px; font-style: italic; }
+
+  /* PHASES TIMELINE */
+  .timeline { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 16px; }
+  .phase { background: var(--card); border: 2px solid var(--card-border); border-radius: 4px; padding: 14px 10px; text-align: center; }
+  .phase-id { display: inline-block; padding: 3px 10px; font-size: 11px; font-weight: 700; border-radius: 2px; margin-bottom: 8px; color: var(--dark); }
+  .phase h4 { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+  .phase-weeks { font-size: 10px; color: var(--gray); font-style: italic; }
+  .p1 { border-color: var(--teal); } .p1 .phase-id { background: var(--teal); }
+  .p2 { border-color: var(--green); } .p2 .phase-id { background: var(--green); }
+  .p3 { border-color: var(--gold); } .p3 .phase-id { background: var(--gold); }
+  .p4 { border-color: #E63030; } .p4 .phase-id { background: #E63030; }
+  .p5 { border-color: var(--teal); } .p5 .phase-id { background: var(--teal); }
+  .p6 { border-color: var(--green); } .p6 .phase-id { background: var(--green); }
+
+  /* GLOSSAIRE */
+  .gloss-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin-bottom: 40px; }
+  .gloss-card { background: var(--card); border: 1px solid var(--card-border); border-radius: 4px; padding: 14px; }
+  .gloss-term { display: inline-block; padding: 2px 10px; font-size: 11px; font-weight: 700; color: var(--dark); border-radius: 2px; margin-bottom: 8px; }
+  .gloss-full { font-size: 11px; font-weight: 700; color: var(--teal); margin-bottom: 6px; }
+  .gloss-def { font-size: 11px; color: var(--gray-light); margin-bottom: 6px; line-height: 1.5; }
+  .gloss-analogy { font-size: 10px; color: var(--gray); font-style: italic; }
+  .gloss-analogy::before { content: '〉 '; color: var(--teal); font-style: normal; font-weight: 700; }
+
+  /* METRICS ROW */
+  .metrics { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 40px; }
+  .metric { background: var(--dark); border: 1px solid var(--card-border); border-radius: 4px; padding: 16px; text-align: center; }
+  .metric-val { font-size: 1.8rem; font-weight: 700; color: var(--gold); }
+  .metric-label { font-size: 11px; color: var(--gray-light); font-weight: 700; margin: 4px 0 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .metric-sub { font-size: 10px; color: var(--gray); font-style: italic; }
+
+  /* ROI BANNER */
+  .roi-banner { background: var(--dark); border: 1px solid var(--gold); border-left: 4px solid var(--gold); border-radius: 4px; padding: 16px 20px; margin-bottom: 40px; font-size: 13px; }
+  .roi-banner strong { color: var(--gold); }
+
+  /* DOWNLOAD CTA */
+  .cta-section { padding: 40px 48px 56px; text-align: center; }
+  .cta-title { font-size: 1.2rem; color: var(--gray-light); margin-bottom: 20px; }
+  .cta-btn { display: inline-block; background: var(--red); color: var(--white); text-decoration: none; padding: 14px 36px; font-weight: 700; font-size: 15px; border-radius: 3px; letter-spacing: 0.5px; transition: background 0.2s; }
+  .cta-btn:hover { background: #E63030; }
+  .cta-note { margin-top: 12px; font-size: 11px; color: var(--gray); }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--card-border); padding: 24px 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  footer p { font-size: 11px; color: var(--gray); }
+  .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tag { background: var(--card); border: 1px solid var(--card-border); color: var(--gray); padding: 2px 8px; font-size: 10px; border-radius: 2px; }
+
+  @media (max-width: 768px) {
+    .hero { padding: 32px 20px 28px; }
+    .hero h1 { font-size: 1.6rem; }
+    .section { padding: 32px 20px 0; }
+    .timeline { grid-template-columns: repeat(2, 1fr); }
+    .metrics { grid-template-columns: repeat(2, 1fr); }
+    .cta-section { padding: 32px 20px 40px; }
+    footer { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">Red Hat OpenShift AI · Décryptage Expert</div>
+  <h1>OpenShift AI<br><span>Briques, Rôles & Roadmap</span></h1>
+  <p class="hero-sub">33 slides · Historique · Utilité · Limites · Concurrents · Prérequis · Journey Business</p>
+  <div class="hero-axes">
+    <span class="badge teal">Historique</span>
+    <span class="badge teal">Utilité</span>
+    <span class="badge">Limites</span>
+    <span class="badge">Concurrent Propriétaire</span>
+    <span class="badge">Concurrent Open Source</span>
+    <span class="badge">Prérequis Techniques</span>
+    <span class="badge teal">Roadmap Business</span>
+    <span class="badge teal">Matrice Rôles × Phases</span>
+  </div>
+  <div class="hero-filrouge">
+    <strong>🎯 Fil rouge :</strong> Opérateur Telco (Orange) — LLM interne pour triage automatique des incidents réseau 5G/RAN — 9 mois, 6 phases, 4 GPU A100 bare-metal
+  </div>
+</div>
+
+<!-- GLOSSAIRE -->
+<div class="section">
+  <div class="section-title">00 · Glossaire</div>
+  <h2>Notions Fondamentales</h2>
+  <p class="section-sub">14 définitions opérationnelles + analogie — pour lire le deck sans prérequis ML</p>
+  <div class="gloss-grid">
+    <div class="gloss-card"><span class="gloss-term" style="background:var(--teal)">LLM</span><div class="gloss-full">Large Language Model</div><div class="gloss-def">Modèle entraîné sur des milliards de textes pour prédire le token suivant. Capable de générer, résumer, classer. Ex : GPT-4, Granite, Mistral.</div><div class="gloss-analogy">Un stagiaire qui a lu toute la bibliothèque — mais qui peut halluciner avec confiance.</div></div>
+    <div class="gloss-card"><span class="gloss-term" style="background:var(--green)">Embedding</span><div class="gloss-full">Représentation vectorielle sémantique</div><div class="gloss-def">Transformation d'un texte en vecteur numérique. Deux phrases sémantiquement proches ont des vecteurs proches. Base du RAG.</div><div class="gloss-analogy">GPS du sens : 'Panne Nokia' et 'défaillance équipement Nokia' sont proches dans l'espace vectoriel.</div></div>
+    <div class="gloss-card"><span class="gloss-term" style="background:var(--gold)">RAG</span><div class="gloss-full">Retrieval-Augmented Generation</div><div class="gloss-def">Architecture combinant recherche vectorielle + génération LLM. On interroge une base de documents en temps réel et on injecte les passages pertinents dans le prompt.</div><div class="gloss-analogy">Le LLM avec accès à une bibliothèque consultable en live — vs le LLM qui ne sait que ce qu'il a mémorisé.</div></div>
+    <div class="gloss-card"><span class="gloss-term" style="background:#E63030">Fine-tuning</span><div class="gloss-full">Ajustement fin sur données domaine</div><div class="gloss-def">Ré-entraînement d'un LLM sur un dataset métier spécifique. Coûteux mais produit un modèle qui parle le vocabulaire du domaine.</div><div class="gloss-analogy">Prendre un généraliste diplômé et lui faire faire une spécialisation telco de 6 mois sur vos cas réels.</div></div>
+    <div class="gloss-card"><span class="gloss-term" style="background:var(--teal)">Training</span><div class="gloss-full">Entraînement du réseau de neurones</div><div class="gloss-def">Optimisation des poids sur un grand dataset. Pré-training = données générales (mois, GPU clusters). Fine-tuning = adaptation domaine (heures/jours).</div><div class="gloss-analogy">Le pré-training est le bac général. Le fine-tuning est la spécialisation. L'un sans l'autre ne fait pas un expert métier.</div></div>
+    <div class="gloss-card"><span class="gloss-term" style="background:var(--green)">Inference</span><div class="gloss-full">Génération en production (serving)</div><div class="gloss-def">Phase d'utilisation du modèle entraîné. Poids figés, inputs → outputs. KServe + vLLM servent l'inférence. Métrique clé : TTFT et tokens/sec.</div><div class="gloss-analogy">Training = apprendre à conduire. Inference = conduire au quotidien avec le permis.</div></div>
+    <div class="gloss-card"><span class="gloss-term" style="background:var(--gold)">Quantization</span><div class="gloss-full">Compression des poids numériques</div><div class="gloss-def">Réduction FP16 → INT8/INT4. Réduit l'empreinte VRAM et accélère l'inférence. Perte qualité généralement &lt; 2%.</div><div class="gloss-analogy">Passer d'un FLAC audio à un MP3 bien encodé — l'oreille (le modèle) ne voit presque pas la différence.</div></div>
+    <div class="gloss-card"><span class="gloss-term" style="background:#E63030">MLOps</span><div class="gloss-full">DevOps appliqué au cycle de vie ML</div><div class="gloss-def">Pratiques (GitOps, CI/CD, monitoring, versioning) appliquées aux modèles pour garantir reproductibilité et fiabilité en production.</div><div class="gloss-analogy">Ce qui sépare un modèle qui marche dans un notebook d'un modèle qui délivre de la valeur à 3h du matin.</div></div>
+  </div>
+</div>
+
+<!-- BRIQUES -->
+<div class="section">
+  <div class="section-title">01–06 · Briques Techniques</div>
+  <h2>12 Briques Analysées sur 6 Axes</h2>
+  <p class="section-sub">Chaque brique couvre : Historique · Utilité · Limites · Concurrent proprio · Concurrent OSS · Prérequis OCP</p>
+  <div class="grid">
+    <div class="card teal"><div class="card-tag">Data Engineering</div><h3>Docling</h3><p>Document chunking & pre-processing. Ingestion universelle PDF/DOCX/HTML pour pipeline RAG. IBM Research, open source MIT.</p><div class="card-sub">Concurrent : Azure Document Intelligence, Unstructured.io</div></div>
+    <div class="card green"><div class="card-tag">Model Development</div><h3>JupyterLab Workbench</h3><p>Notebook-as-a-Service managé sur OCP. GPU scheduling, bibliothèques AI/ML pré-intégrées, multi-user RBAC.</p><div class="card-sub">Concurrent : Databricks Notebooks, SageMaker Studio</div></div>
+    <div class="card gold"><div class="card-tag">Model Training</div><h3>InstructLab</h3><p>Fine-tuning RLHF synthétique (méthode LAB, MIT × Red Hat). Génère des données d'entraînement sans annotateurs massifs.</p><div class="card-sub">Concurrent : Axolotl, LLaMA-Factory, OpenRLHF</div></div>
+    <div class="card gold"><div class="card-tag">Model Training</div><h3>Ray + Kubeflow Training Op.</h3><p>Distributed training FSDP sur N GPUs. Ray Tune pour hyperparameter search. PyTorchJob déclaratif Kubernetes.</p><div class="card-sub">Concurrent : DeepSpeed, Megatron-LM, NVIDIA DGX Cloud</div></div>
+    <div class="card red"><div class="card-tag">Model Optimization</div><h3>llm-compressor</h3><p>Quantization INT8/FP8, pruning, distillation. Neural Magic (acq. Red Hat 2024). Compatible vLLM post-compression.</p><div class="card-sub">Concurrent : GPTQ, AWQ, TensorRT-LLM</div></div>
+    <div class="card red"><div class="card-tag">Model Evaluation</div><h3>GuideLLM + TrustyAI Eval</h3><p>Benchmarking performance (TTFT, P99) + évaluation qualité et biais. Conformité AI Act EU intégrée.</p><div class="card-sub">Concurrent : lm-evaluation-harness, RAGAS, DeepEval</div></div>
+    <div class="card teal"><div class="card-tag">Model Deployment</div><h3>KServe</h3><p>Inference gateway Kubernetes multi-runtime. Canary, A/B testing, autoscaling KEDA. CNCF sandbox.</p><div class="card-sub">Concurrent : Ray Serve, BentoML, Seldon Core</div></div>
+    <div class="card teal"><div class="card-tag">Model Deployment</div><h3>vLLM</h3><p>Le standard de facto OSS pour serving LLM haute performance. PagedAttention, multi-LoRA, OpenAI-compatible API.</p><div class="card-sub">Concurrent : TGI (HuggingFace), TensorRT-LLM, LMDeploy</div></div>
+    <div class="card green"><div class="card-tag">Model Deployment</div><h3>OpenVINO + llm-d</h3><p>Intel OpenVINO pour inférence CPU/edge. llm-d : prefill/decode disaggregation pour vLLM multi-nœuds OCP.</p><div class="card-sub">Concurrent : llama.cpp, Ollama, MLC-LLM</div></div>
+    <div class="card gold"><div class="card-tag">MLOps</div><h3>ArgoCD + Kubeflow Pipelines</h3><p>GitOps ML complet. Pipeline CI/CD pour modèles, reproductibilité totale via Git. Argo Workflow pour DAG training.</p><div class="card-sub">Concurrent : Metaflow, ZenML, SageMaker Pipelines</div></div>
+    <div class="card gold"><div class="card-tag">MLOps</div><h3>Feast + Model Registry</h3><p>Feature Store point-in-time correct + catalogue versionné des modèles (champion/challenger, audit trail).</p><div class="card-sub">Concurrent : MLflow Registry, Databricks Feature Store</div></div>
+    <div class="card green"><div class="card-tag">Gouvernance</div><h3>TrustyAI Guardrail</h3><p>Détection biais, explainability SHAP/LIME, LLM guardrail (Granite Guardian). Conformité AI Act EU Art. 9.</p><div class="card-sub">Concurrent : Evidently AI, Langfuse, AWS Bedrock Guardrails</div></div>
+  </div>
+</div>
+
+<!-- ROADMAP -->
+<div class="section">
+  <div class="section-title">07 · Journey Business</div>
+  <h2>Roadmap 6 Phases — 9 Mois</h2>
+  <p class="section-sub">De zéro à la production : chaque brique, chaque rôle, chaque exit criteria</p>
+  <div class="timeline">
+    <div class="phase p1"><span class="phase-id">P1</span><h4 style="color:var(--teal)">Discovery<br>& Corpus</h4><div class="phase-weeks">S1–S4</div></div>
+    <div class="phase p2"><span class="phase-id">P2</span><h4 style="color:var(--green)">Data Prep<br>& Features</h4><div class="phase-weeks">S5–S8</div></div>
+    <div class="phase p3"><span class="phase-id">P3</span><h4 style="color:var(--gold)">Fine-tuning<br>& Training</h4><div class="phase-weeks">S9–S16</div></div>
+    <div class="phase p4"><span class="phase-id" style="background:#E63030">P4</span><h4 style="color:#E63030">Optim<br>& Eval</h4><div class="phase-weeks">S17–S20</div></div>
+    <div class="phase p5"><span class="phase-id">P5</span><h4 style="color:var(--teal)">Déploiement<br>Prod</h4><div class="phase-weeks">S21–S28</div></div>
+    <div class="phase p6"><span class="phase-id">P6</span><h4 style="color:var(--green)">Opérations<br>& Gouvernance</h4><div class="phase-weeks">S29–S36</div></div>
+  </div>
+  <div class="metrics">
+    <div class="metric"><div class="metric-val">50K</div><div class="metric-label">Tickets</div><div class="metric-sub">Nokia + Ericsson</div></div>
+    <div class="metric"><div class="metric-val">13B</div><div class="metric-label">Granite 3.1</div><div class="metric-sub">→ INT8 6.5 Go</div></div>
+    <div class="metric"><div class="metric-val">380ms</div><div class="metric-label">TTFT P99</div><div class="metric-sub">Sur A100</div></div>
+    <div class="metric"><div class="metric-val">92.4%</div><div class="metric-label">Précision</div><div class="metric-sub">vs 67% baseline</div></div>
+    <div class="metric"><div class="metric-val">−40%</div><div class="metric-label">MTTR P1/P2</div><div class="metric-sub">Objectif S36</div></div>
+  </div>
+  <div class="roi-banner">
+    <strong>Jalons ROI :</strong> S8 POC validé NOC · S20 Go/No-go CODIR · S28 Go-Live (45 opérateurs formés) · S36 −40% MTTR mesuré<br>
+    <strong>Budget indicatif :</strong> 4 GPU A100 bare-metal existants · ~4 FTE équivalent plein temps · 9 mois MVP → production
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <p class="cta-title">Deck complet disponible — 33 slides, format PPTX éditable</p>
+  <p style="font-size:13px;color:var(--gray);margin-bottom:6px;">Téléchargeable via la session Claude ayant généré ce document</p>
+  <p class="cta-note">Orange DT/DTR · Architecture CaaS Telco · Taoufik Bouazza · 2025</p>
+</div>
+
+<footer>
+  <p>taoufikbouazza.substack.com · Orange DT/DTR · Architecture CaaS Bare-Metal · 2025</p>
+  <div class="tags">
+    <span class="tag">openshift-ai</span>
+    <span class="tag">llm</span>
+    <span class="tag">mlops</span>
+    <span class="tag">telco</span>
+    <span class="tag">5g</span>
+    <span class="tag">vllm</span>
+    <span class="tag">kserve</span>
+    <span class="tag">instructlab</span>
+    <span class="tag">rag</span>
+    <span class="tag">orange</span>
+  </div>
+</footer>
+
+</body>
+</html>
