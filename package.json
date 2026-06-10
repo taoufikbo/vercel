@@ -1,0 +1,10 @@
+{
+  "name": "knowledge-base",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/categorize.js",
+    "dev": "node scripts/categorize.js && echo '\n📡 Ouvre public/index.html dans ton navigateur'"
+  },
+  "description": "Site de publication avec catégorisation IA automatique"
+}
