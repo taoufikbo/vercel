@@ -1,0 +1,9 @@
+{
+  "buildCommand": "node scripts/categorize.js",
+  "outputDirectory": "public",
+  "installCommand": "echo 'no install needed'",
+  "framework": null,
+  "env": {
+    "ANTHROPIC_API_KEY": "@anthropic-api-key"
+  }
+}
