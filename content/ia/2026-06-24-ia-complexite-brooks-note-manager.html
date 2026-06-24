@@ -123,6 +123,54 @@
     <p>Les démos sont convaincantes. Les gains locaux sont réels. Et pourtant : les projets prennent du temps, les rollbacks en production s'accumulent, les équipes souffrent autant qu'avant. Ce document explique pourquoi — et ce que ça implique comme décisions.</p>
   </div>
 
+  <!-- TABLEAU INTRO : OBJET MANIPULÉ -->
+  <h2>0 · Ce que l'IA manipule réellement</h2>
+  <p class="lead">Avant d'aller plus loin : l'IA est toujours du logiciel. Mais ce qu'elle attaque comme problème change tout. Selon la nature de la cible, les gains sont d'une nature radicalement différente.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Objet manipulé</th>
+          <th>Nature de la cible</th>
+          <th>La cible bouge-t-elle ?</th>
+          <th>Gains observés</th>
+          <th>Exemples</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Problème physique fermé</td>
+          <td>Déterminé par la nature — une seule réponse correcte, vérifiable expérimentalement</td>
+          <td style="color:var(--green);font-weight:600">Non. La physique ne change pas de spécification.</td>
+          <td>Transformatifs. L'IA résout des problèmes ouverts depuis des décennies.</td>
+          <td>Structure de protéines (AlphaFold, Nobel 2024), prévision météo (GraphCast, Science 2023), nouveaux matériaux (GNoME, Nature 2023)</td>
+        </tr>
+        <tr>
+          <td>Artefact logiciel</td>
+          <td>Construit socialement — spécifications, contraintes, périmètre évoluent en permanence</td>
+          <td style="color:var(--red);font-weight:600">Oui. En continu. C'est sa nature même (Brooks, 1986).</td>
+          <td>Réels sur la production, limités sur l'intégration. Les goulots organisationnels restent entiers.</td>
+          <td>SI d'entreprise, plateformes télécoms, CaaS, applications métier</td>
+        </tr>
+        <tr>
+          <td>Connaissance cognitive</td>
+          <td>Corpus textuel stable — mais interprétation et validation restent humaines</td>
+          <td style="color:var(--amber);font-weight:600">Partiellement. Le corpus est fixe, le jugement ne l'est pas.</td>
+          <td>Accélération réelle de la synthèse. Raisonnement de recherche encore limité sur problèmes ouverts.</td>
+          <td>Revue de littérature, rédaction, raisonnement mathématique standard (FrontierMath : &lt;2% sur problèmes experts)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout" style="margin-bottom:2rem">
+    <div class="callout-label">Ce que ça change à la lecture de la suite</div>
+    <p>AlphaFold est du logiciel — mais il attaque une cible physique fermée. Les gains sont spectaculaires parce que la protéine ne reçoit pas de nouvelles exigences fonctionnelles. Un système de facturation, une plateforme 5G Core, une infrastructure CaaS : si. C'est là que Brooks s'applique. Le reste de ce document porte sur ce deuxième cas.</p>
+  </div>
+
+  <hr>
+
   <!-- SECTION 1 -->
   <h2>1 · Une distinction vieille de 40 ans, toujours valide</h2>
   <p class="lead">En 1986, Fred Brooks — informaticien, prix Turing, auteur de la référence fondatrice sur les projets logiciels — a posé une distinction simple. Elle a résisté à toutes les vagues technologiques depuis : langages haut niveau, frameworks, internet, cloud, agile, microservices.</p>
