@@ -13,8 +13,6 @@
     --text2: #4a4a46;
     --text3: #7a7a74;
     --border: #d4d0c8;
-    --accent: #1a3a2a;
-    --accent2: #2d5a40;
     --warn: #7a3a00;
     --warn-bg: #fef3e2;
     --warn-border: #f59e0b;
@@ -31,56 +29,30 @@
     --suse-bg: #ecfdf5;
     --rh: #991b1b;
     --rh-bg: #fef2f2;
-    --neutral: #4a4a46;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #141412;
-      --bg2: #1e1e1c;
-      --bg3: #282824;
-      --text: #f0ede6;
-      --text2: #b0ada6;
-      --text3: #7a7a74;
+      --bg: #141412; --bg2: #1e1e1c; --bg3: #282824;
+      --text: #f0ede6; --text2: #b0ada6; --text3: #6a6a64;
       --border: #3a3a36;
-      --accent: #4ade80;
-      --accent2: #86efac;
-      --warn: #fbbf24;
-      --warn-bg: #1c1400;
-      --warn-border: #92400e;
-      --danger: #f87171;
-      --danger-bg: #1c0000;
-      --danger-border: #991b1b;
-      --ok: #4ade80;
-      --ok-bg: #001c08;
-      --ok-border: #166534;
-      --info: #93c5fd;
-      --info-bg: #00081c;
-      --info-border: #1e3a8a;
-      --suse: #4ade80;
-      --suse-bg: #001c08;
-      --rh: #f87171;
-      --rh-bg: #1c0000;
+      --warn: #fbbf24; --warn-bg: #1c1200; --warn-border: #92400e;
+      --danger: #f87171; --danger-bg: #1c0000; --danger-border: #991b1b;
+      --ok: #4ade80; --ok-bg: #001c08; --ok-border: #166534;
+      --info: #93c5fd; --info-bg: #00081c; --info-border: #1e3a8a;
+      --suse: #34d399; --suse-bg: #00150a;
+      --rh: #f87171; --rh-bg: #150000;
     }
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Georgia', 'Times New Roman', serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.75;
-    font-size: 16px;
-  }
+  body { font-family: Georgia, 'Times New Roman', serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 16px; }
   .page { max-width: 900px; margin: 0 auto; padding: 3rem 2rem 6rem; }
-  
-  /* Header */
+
   .doc-header { border-bottom: 2px solid var(--border); padding-bottom: 2rem; margin-bottom: 3rem; }
   .doc-kicker { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); margin-bottom: 0.75rem; }
   .doc-title { font-size: 2rem; font-weight: 700; line-height: 1.25; color: var(--text); margin-bottom: 0.75rem; }
-  .doc-sub { font-size: 1.1rem; color: var(--text2); margin-bottom: 1.5rem; }
+  .doc-sub { font-size: 1.05rem; color: var(--text2); margin-bottom: 1.25rem; }
   .doc-meta { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 12px; color: var(--text3); display: flex; gap: 2rem; flex-wrap: wrap; }
-  .doc-meta span { display: flex; align-items: center; gap: 0.4rem; }
 
-  /* TOC */
   .toc { background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 1.5rem 2rem; margin-bottom: 3rem; }
   .toc-title { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 1rem; }
   .toc ol { padding-left: 1.5rem; }
@@ -88,25 +60,40 @@
   .toc a { color: var(--text2); text-decoration: none; }
   .toc a:hover { color: var(--text); text-decoration: underline; }
 
-  /* Executive Summary */
-  .exec-summary { background: var(--accent); color: #fff; border-radius: 8px; padding: 2rem 2.5rem; margin-bottom: 3rem; }
-  .exec-summary .es-title { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7; margin-bottom: 1rem; }
-  .exec-summary p { font-size: 15px; line-height: 1.8; margin-bottom: 1rem; opacity: 0.92; }
+  /* Executive Summary — fond neutre, texte lisible */
+  .exec-summary {
+    background: var(--bg2);
+    border: 2px solid var(--border);
+    border-left: 5px solid #1a3a2a;
+    border-radius: 8px;
+    padding: 2rem 2.5rem;
+    margin-bottom: 3rem;
+  }
+  .exec-summary .es-title {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: #1a3a2a; margin-bottom: 1.25rem;
+  }
+  @media (prefers-color-scheme: dark) {
+    .exec-summary { border-left-color: #34d399; }
+    .exec-summary .es-title { color: #34d399; }
+  }
+  .exec-summary p { font-size: 15px; line-height: 1.8; margin-bottom: 1rem; color: var(--text2); }
   .exec-summary p:last-child { margin-bottom: 0; }
-  .exec-summary strong { opacity: 1; }
+  .exec-summary strong { color: var(--text); font-weight: 600; }
   .findings { margin-top: 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  .finding { background: rgba(255,255,255,0.1); border-radius: 6px; padding: 0.85rem 1rem; }
-  .finding-label { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.6; margin-bottom: 0.35rem; }
-  .finding-val { font-size: 14px; line-height: 1.5; }
+  .finding { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 0.9rem 1rem; }
+  .finding-label { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 0.4rem; }
+  .finding-val { font-size: 13px; line-height: 1.55; color: var(--text2); }
 
-  /* Sections */
   .section { margin-bottom: 3.5rem; }
-  h2 { font-size: 1.4rem; font-weight: 700; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; margin-bottom: 1.5rem; scroll-margin-top: 1rem; }
-  h3 { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 0.75rem; margin-top: 1.5rem; }
+  h2 { font-size: 1.35rem; font-weight: 700; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; margin-bottom: 1.5rem; scroll-margin-top: 1rem; }
+  h3 { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.95rem; font-weight: 600; color: var(--text); margin-bottom: 0.75rem; margin-top: 1.5rem; }
   p { margin-bottom: 1rem; color: var(--text2); font-size: 15px; }
   strong { color: var(--text); font-weight: 600; }
+  em { font-style: italic; }
 
-  /* Alerts */
   .alert { border-radius: 6px; padding: 1rem 1.25rem; margin-bottom: 1.25rem; font-size: 14px; line-height: 1.7; font-family: 'Helvetica Neue', Arial, sans-serif; }
   .alert-warn { background: var(--warn-bg); border-left: 4px solid var(--warn-border); color: var(--warn); }
   .alert-danger { background: var(--danger-bg); border-left: 4px solid var(--danger-border); color: var(--danger); }
@@ -114,23 +101,20 @@
   .alert-info { background: var(--info-bg); border-left: 4px solid var(--info-border); color: var(--info); }
   .alert strong { color: inherit; }
 
-  /* Comparison table */
   .comp-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 13px; }
   .comp-table th { background: var(--bg3); color: var(--text2); font-weight: 600; padding: 10px 14px; text-align: left; border-bottom: 2px solid var(--border); }
   .comp-table th.suse-th { color: var(--suse); background: var(--suse-bg); }
   .comp-table th.rh-th { color: var(--rh); background: var(--rh-bg); }
-  .comp-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.6; }
+  .comp-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.6; color: var(--text2); }
   .comp-table tr:last-child td { border-bottom: none; }
   .comp-table .dim-cell { font-weight: 600; color: var(--text); background: var(--bg2); width: 180px; }
-  .comp-table .suse-cell { background: var(--suse-bg); color: var(--ok); }
-  .comp-table .rh-cell { background: var(--rh-bg); }
+
   .tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 3px; margin: 2px 1px; font-family: 'Helvetica Neue', Arial, sans-serif; text-transform: uppercase; letter-spacing: 0.04em; }
   .tag-ok { background: var(--ok-bg); color: var(--ok); border: 1px solid var(--ok-border); }
   .tag-warn { background: var(--warn-bg); color: var(--warn); border: 1px solid var(--warn-border); }
   .tag-danger { background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger-border); }
   .tag-neutral { background: var(--bg3); color: var(--text2); border: 1px solid var(--border); }
 
-  /* Score bars */
   .scores { margin: 1.5rem 0; }
   .score-row { margin-bottom: 14px; }
   .score-label { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 12px; color: var(--text2); margin-bottom: 4px; font-weight: 500; }
@@ -143,12 +127,10 @@
   .bar-rh { background: var(--rh); }
   .bar-val { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11px; width: 30px; color: var(--text3); }
 
-  /* Ownership chain */
   .chain { display: flex; flex-direction: column; gap: 0; margin: 1rem 0 1.5rem; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 13px; }
   .chain-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 12px; border: 1px solid var(--border); border-bottom: none; background: var(--bg); }
   .chain-item:first-child { border-radius: 6px 6px 0 0; }
   .chain-item:last-child { border-bottom: 1px solid var(--border); border-radius: 0 0 6px 6px; }
-  .chain-arrow { color: var(--text3); margin-top: 1px; }
   .chain-name { font-weight: 600; color: var(--text); min-width: 180px; }
   .chain-detail { color: var(--text2); font-size: 12px; flex: 1; }
   .chain-flag { font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 2px; margin-left: auto; white-space: nowrap; }
@@ -156,15 +138,13 @@
   .flag-us { background: #fee2e2; color: #991b1b; }
   .flag-mixed { background: #fef3c7; color: #92400e; }
 
-  /* Verdict box */
   .verdict { border: 2px solid var(--border); border-radius: 8px; padding: 1.5rem 2rem; margin: 2rem 0; }
   .verdict-title { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 0.75rem; }
-  .verdict p { font-size: 14px; margin-bottom: 0.5rem; }
+  .verdict p { font-size: 14px; margin-bottom: 0.5rem; color: var(--text2); }
   .verdict p:last-child { margin-bottom: 0; }
 
-  /* Grid 2 col */
   .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0 1.5rem; }
-  .vendor-card { border: 1px solid var(--border); border-radius: 6px; padding: 1.25rem; }
+  .vendor-card { border: 1px solid var(--border); border-radius: 6px; padding: 1.25rem; background: var(--bg); }
   .vendor-card.suse { border-left: 4px solid var(--suse); }
   .vendor-card.rh { border-left: 4px solid var(--rh); }
   .vc-label { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.5rem; }
@@ -174,21 +154,12 @@
   .vc-body li { margin-bottom: 0.4rem; padding-left: 1rem; position: relative; list-style: none; }
   .vc-body li::before { content: '→'; position: absolute; left: 0; color: var(--text3); }
 
-  /* CNCF chain box */
-  .infra-chain { background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1rem 0 1.5rem; font-family: 'Courier New', monospace; font-size: 12px; line-height: 2; color: var(--text2); }
-  .infra-chain .layer { display: flex; align-items: center; gap: 8px; }
-  .infra-chain .layer-name { min-width: 200px; color: var(--text); font-weight: 600; }
-  .infra-chain .layer-jur { font-size: 10px; padding: 1px 6px; border-radius: 2px; font-family: 'Helvetica Neue', Arial, sans-serif; }
+  .svg-wrap { margin: 1.5rem 0 2rem; overflow-x: auto; }
+  .svg-caption { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 12px; color: var(--text3); text-align: center; margin-top: 0.5rem; font-style: italic; }
 
-  /* Footnotes */
   .footnotes { border-top: 1px solid var(--border); margin-top: 3rem; padding-top: 1.5rem; }
   .footnotes p { font-size: 12px; color: var(--text3); font-family: 'Helvetica Neue', Arial, sans-serif; margin-bottom: 0.35rem; }
 
-  /* Print */
-  @media print {
-    .page { padding: 1rem; }
-    .exec-summary { background: #1a3a2a !important; -webkit-print-color-adjust: exact; }
-  }
   @media (max-width: 640px) {
     .grid2 { grid-template-columns: 1fr; }
     .findings { grid-template-columns: 1fr; }
@@ -200,19 +171,16 @@
 <body>
 <div class="page">
 
-<!-- HEADER -->
 <div class="doc-header">
   <div class="doc-kicker">Analyse stratégique — Souveraineté numérique</div>
   <h1 class="doc-title">SUSE vs Red Hat :<br>ce que le discours souveraineté ne dit pas</h1>
-  <div class="doc-sub">Analyse comparative multi-dimensionnelle — cadre juridique, blocage opérationnel, autonomie technique, contribution open source et dépendances systémiques</div>
+  <div class="doc-sub">Analyse comparative multi-dimensionnelle — cadre juridique, blocage opérationnel, autonomie technique, contributions open source et dépendances systémiques CNCF</div>
   <div class="doc-meta">
     <span>📅 Juin 2026</span>
     <span>🏷 Telco Cloud · CaaS · RFP · Vendor lock-in</span>
-    <span>👤 Usage interne DTR / STarc / RSM</span>
   </div>
 </div>
 
-<!-- TOC -->
 <div class="toc">
   <div class="toc-title">Sommaire</div>
   <ol>
@@ -231,13 +199,13 @@
 <!-- EXECUTIVE SUMMARY -->
 <div class="exec-summary" id="exec">
   <div class="es-title">Executive Summary</div>
-  <p>SUSE et Red Hat ont tous deux construit un discours souveraineté ambitieux et bien structuré pour 2025-2026. Red Hat mobilise un cadre en 4 piliers (data, technique, opérationnelle, assurance), un outil d'évaluation en 7 domaines, et un support EU-only à citoyens certifiés. SUSE structure la distinction data vs. digital sovereignty et propose un self-assessment aligné EU Cloud Sovereignty Framework.</p>
+  <p>SUSE et Red Hat ont tous deux construit un discours souveraineté ambitieux pour 2025-2026. Red Hat mobilise un cadre en 4 piliers (data, technique, opérationnelle, assurance), un outil d'évaluation en 7 domaines, et un support EU-only à citoyens certifiés. SUSE structure la distinction data vs. digital sovereignty et propose un self-assessment aligné EU Cloud Sovereignty Framework.</p>
   <p><strong>Ces discours sont de haute qualité. Ils ne résolvent pas le problème fondamental.</strong> L'analyse juridique, technique et structurelle révèle que les deux acteurs opèrent dans une chaîne de dépendances dont le centre de gravité est américain — et qu'aucun des deux ne peut honnêtement prétendre offrir une souveraineté complète au sens SecNumCloud ou ANSSI pour un OIV.</p>
-  <p>Les différences entre SUSE et Red Hat sont réelles et significatives pour une organisation comme Orange : SUSE offre une meilleure souveraineté de fait sur les déploiements on-premise (licence Apache 2.0, absence de pull secret, portabilité maximale, pas de kill switch technique). Red Hat offre un discours plus structuré, un meilleur support EU certifié, et une supply chain logicielle plus avancée — mais son exposition CLOUD Act est directe et irréductible (Red Hat Inc., Delaware, filiale IBM Corp.).</p>
+  <p>Les différences entre SUSE et Red Hat sont réelles : SUSE offre une souveraineté de fait supérieure sur les déploiements on-premise (licence Apache 2.0, absence de pull secret, portabilité maximale, pas de kill switch technique). Red Hat offre un discours plus structuré, un meilleur support EU certifié, et une supply chain logicielle plus avancée — mais son exposition CLOUD Act est directe et irréductible (Red Hat Inc., Delaware, filiale IBM Corp.).</p>
   <div class="findings">
     <div class="finding">
       <div class="finding-label">Exposition CLOUD Act</div>
-      <div class="finding-val">Red Hat : directe (Delaware C-Corp). SUSE : indirecte via EQT LLC (Delaware). Ni l'un ni l'autre n'est immunisé.</div>
+      <div class="finding-val">Red Hat : directe (Delaware C-Corp). SUSE : indirecte via EQT LLC Delaware. Ni l'un ni l'autre n'est immunisé.</div>
     </div>
     <div class="finding">
       <div class="finding-label">Capacité de blocage vendor</div>
@@ -245,415 +213,420 @@
     </div>
     <div class="finding">
       <div class="finding-label">Dépendance systémique ignorée</div>
-      <div class="finding-val">La CNCF et Linux Foundation sont des entités 501(c)6 de droit US (San Francisco). La marque "Kubernetes" est déposée à l'USPTO par la Linux Foundation.</div>
+      <div class="finding-val">La CNCF et la Linux Foundation sont des entités 501(c)6 de droit US. La marque "Kubernetes" est déposée à l'USPTO par la Linux Foundation.</div>
     </div>
     <div class="finding">
-      <div class="finding-label">Conclusion pour OIV/SecNumCloud</div>
-      <div class="finding-val">Ni SUSE ni Red Hat ne satisfont aux critères d'indépendance capitalistique requis par SecNumCloud. La vraie souveraineté passe par des acteurs qualifiés ANSSI ou une infrastructure 100% maîtrisée.</div>
+      <div class="finding-label">Conclusion OIV / SecNumCloud</div>
+      <div class="finding-val">Ni SUSE ni Red Hat ne satisfont les critères d'indépendance capitalistique SecNumCloud. La vraie souveraineté exige des acteurs qualifiés ANSSI ou une infrastructure 100% maîtrisée.</div>
     </div>
   </div>
 </div>
 
-<!-- SECTION 1 — CONCEPTS -->
+<!-- SECTION 1 -->
 <div class="section" id="concepts">
   <h2>1. Les deux souverainetés — ce que SUSE et Red Hat en disent</h2>
-
   <p>Les deux éditeurs ont publié en 2025-2026 des positionnements complets sur la souveraineté numérique, en réponse à une pression réglementaire EU croissante (NIS2, DORA, EU AI Act) et à un marché du cloud souverain estimé à <strong>80 Md$ en 2026 (+36% vs 2025)</strong> selon Gartner.</p>
 
   <h3>Le cadre SUSE (mai 2026)</h3>
-  <p>SUSE distingue deux niveaux : la <strong>souveraineté des données</strong> (où résident les données, quelle loi les gouverne) et la <strong>souveraineté numérique</strong> (qui contrôle les systèmes, comment les décisions sont prouvables et modifiables). L'article d'Andreas Prins décompose ensuite la souveraineté numérique en trois sous-types : technique, opérationnelle et cloud. Le CTA pointe vers un self-assessment aligné EU Cloud Sovereignty Framework 2025 (score SEAL) et vers SUSE Sovereign Premium Support.</p>
+  <p>SUSE distingue deux niveaux : la <strong>souveraineté des données</strong> (où résident les données, quelle loi les gouverne) et la <strong>souveraineté numérique</strong> (qui contrôle les systèmes, comment les décisions sont prouvables et modifiables). La souveraineté numérique est décomposée en trois sous-types : technique, opérationnelle et cloud. CTA : self-assessment EU Cloud Sovereignty Framework 2025 (score SEAL) + SUSE Sovereign Premium Support.</p>
 
   <h3>Le cadre Red Hat (2025-2026)</h3>
-  <p>Red Hat structure la souveraineté en <strong>4 piliers formels</strong> : souveraineté des données (classification, stockage conforme), souveraineté technique (workloads sans dépendance infrastructurelle), souveraineté opérationnelle (visibilité et contrôle sur les opérations du fournisseur), et souveraineté d'assurance (vérification indépendante de l'intégrité des systèmes). Ce cadre est ensuite décliné en un outil d'évaluation de maturité couvrant 7 domaines, un cours de formation Red Hat Learning Subscription, et le Confirmed Sovereign Support EU (GA avril 2026 — support exclusivement par citoyens EU).</p>
+  <p>Red Hat structure la souveraineté en <strong>4 piliers formels</strong> : souveraineté des données, technique, opérationnelle, et d'assurance. Ce cadre est décliné en un outil d'évaluation de maturité (7 domaines), un cours de formation (Red Hat Learning Subscription), et le Confirmed Sovereign Support EU (GA avril 2026).</p>
 
-  <div class="alert alert-info"><strong>Lecture critique :</strong> Red Hat investit structurellement plus dans l'ingénierie du discours souveraineté. L'article SUSE reste sur un registre pédagogique/éditorial ; les annonces Red Hat Summit 2026 sont des livrables produit concrets. Cette asymétrie reflète l'écart de moyens entre les deux entités (IBM derrière Red Hat) — et aussi le fait que Red Hat a plus à prouver, son exposition juridique US étant plus directe.</div>
+  <div class="alert alert-info"><strong>Lecture critique :</strong> Red Hat investit structurellement plus dans l'ingénierie du discours souveraineté — les annonces Red Hat Summit 2026 sont des livrables produit concrets, là où l'article SUSE reste pédagogique. Cette asymétrie reflète l'écart de moyens (IBM derrière Red Hat) — et le fait que Red Hat a plus à prouver, son exposition juridique US étant plus directe.</div>
 
   <table class="comp-table">
-    <tr>
-      <th class="dim-th">Dimension</th>
-      <th class="suse-th">SUSE</th>
-      <th class="rh-th">Red Hat</th>
-    </tr>
-    <tr>
-      <td class="dim-cell">Profondeur conceptuelle</td>
-      <td>2 niveaux + 3 sous-types</td>
-      <td>4 piliers formels + 7 domaines d'évaluation</td>
-    </tr>
-    <tr>
-      <td class="dim-cell">Outil self-assessment</td>
-      <td>SUSE Cloud Sovereignty Framework (EU 2025, score SEAL)</td>
-      <td>Digital Sovereignty Readiness Assessment (7 domaines, 4 niveaux, code open source)</td>
-    </tr>
-    <tr>
-      <td class="dim-cell">Support souverain</td>
-      <td>SUSE Sovereign Premium Support (EU-based)</td>
-      <td>Confirmed Sovereign Support (citoyens EU, GA avril 2026)</td>
-    </tr>
-    <tr>
-      <td class="dim-cell">Supply chain software</td>
-      <td>Non annoncé</td>
-      <td>CDN EU pour RHEL (mai 2026), extension 2026</td>
-    </tr>
-    <tr>
-      <td class="dim-cell">Telemetry souveraine</td>
-      <td>On-prem par nature (pas de collecte active)</td>
-      <td>Lightspeed on-prem pour OCP (annoncé mai 2026)</td>
-    </tr>
-    <tr>
-      <td class="dim-cell">Ancrage partenaire</td>
-      <td>EQT (PE suédois)</td>
-      <td>IBM Sovereign Core (GA mai 2026, bâti sur OCP)</td>
-    </tr>
+    <tr><th>Dimension</th><th class="suse-th">SUSE</th><th class="rh-th">Red Hat</th></tr>
+    <tr><td class="dim-cell">Profondeur conceptuelle</td><td>2 niveaux + 3 sous-types</td><td>4 piliers formels + 7 domaines</td></tr>
+    <tr><td class="dim-cell">Self-assessment</td><td>EU Cloud Sovereignty Framework (score SEAL)</td><td>7 domaines, 4 niveaux, code open source</td></tr>
+    <tr><td class="dim-cell">Support souverain</td><td>SUSE Sovereign Premium Support (EU-based)</td><td>Confirmed Sovereign Support EU (GA avril 2026)</td></tr>
+    <tr><td class="dim-cell">Supply chain software</td><td>Non annoncé</td><td>CDN EU pour RHEL (mai 2026)</td></tr>
+    <tr><td class="dim-cell">Telemetry souveraine</td><td>On-prem par nature (pas de collecte active)</td><td>Lightspeed on-prem OCP (annoncé mai 2026)</td></tr>
+    <tr><td class="dim-cell">Ancrage partenaire</td><td>EQT (PE suédois)</td><td>IBM Sovereign Core (GA mai 2026, bâti sur OCP)</td></tr>
   </table>
 </div>
 
-<!-- SECTION 2 — JURIDIQUE -->
+<!-- SECTION 2 -->
 <div class="section" id="juridique">
   <h2>2. Cadre juridique : CLOUD Act, Patriot Act, chaîne d'actionnariat</h2>
 
   <h3>Le mécanisme légal d'extraterritorialité</h3>
-  <p>Le <strong>CLOUD Act</strong> (Clarifying Lawful Overseas Use of Data Act, mars 2018) modifie l'Electronic Communications Privacy Act pour exiger de tout prestataire de service électronique soumis à la juridiction US qu'il fournisse des données sur demande des autorités américaines, <em>quel que soit le lieu de stockage physique</em>. Le critère décisif est la notion de "custody, control, or possession" — si l'entité US a le contrôle sur les données, elle doit les fournir, même si elles sont hébergées en Europe.</p>
-  <p>Le <strong>Patriot Act</strong> (2001) avait établi le principe précédent : accès élargi des agences de renseignement US aux données de sociétés américaines. Le CLOUD Act le codifie et l'étend explicitement aux données extraterritoriales.</p>
+  <p>Le <strong>CLOUD Act</strong> (Clarifying Lawful Overseas Use of Data Act, mars 2018) exige de tout prestataire soumis à la juridiction US qu'il fournisse des données sur demande des autorités américaines, <em>quel que soit le lieu de stockage physique</em>. Le critère décisif est la notion de <strong>"custody, control, or possession"</strong> — c'est la nationalité juridique de l'entité qui contrôle, pas la géographie du serveur, qui détermine l'exposition.</p>
+  <p>Le <strong>Patriot Act</strong> (2001) avait posé le principe : accès élargi des agences de renseignement US aux données de sociétés américaines. Le CLOUD Act le codifie et l'étend explicitement aux données extraterritoriales.</p>
 
-  <div class="alert alert-warn"><strong>Point clé pour les architectes :</strong> Ce n'est pas la localisation des serveurs qui détermine l'exposition — c'est la nationalité juridique de l'entité qui a le contrôle (custody/control) sur les données ou les systèmes. Un serveur en France opéré par une entité US reste exposé au CLOUD Act.</div>
+  <div class="alert alert-warn"><strong>Point clé pour les architectes :</strong> Un serveur en France opéré par une entité US (ou contrôlée par une entité US) reste intégralement exposé au CLOUD Act. La localisation physique des données ne constitue pas une protection juridique suffisante.</div>
 
   <h3>Chaîne d'actionnariat SUSE</h3>
   <div class="chain">
-    <div class="chain-item">
-      <span class="chain-name">SUSE SA</span>
-      <span class="chain-detail">Entité opérationnelle produit — siège Luxembourg, société anonyme</span>
-      <span class="chain-flag flag-eu">Luxembourg EU</span>
-    </div>
-    <div class="chain-item">
-      <span class="chain-arrow">↑ fusionnée dans</span>
-      <span class="chain-name">Marcel New Lux IV</span>
-      <span class="chain-detail">Holding de fusion post-délisting Francfort (nov. 2023) — entité luxembourgeoise</span>
-      <span class="chain-flag flag-eu">Luxembourg EU</span>
-    </div>
-    <div class="chain-item">
-      <span class="chain-arrow">↑ contrôlée par</span>
-      <span class="chain-name">EQT Holdings AB</span>
-      <span class="chain-detail">Holding suédoise d'EQT, cotée à Stockholm</span>
-      <span class="chain-flag flag-mixed">Suède (coté)</span>
-    </div>
-    <div class="chain-item">
-      <span class="chain-arrow">↑ gérée par</span>
-      <span class="chain-name">EQT Partners Inc.</span>
-      <span class="chain-detail">Filiale US de gestion — 245 Park Avenue, New York NY</span>
-      <span class="chain-flag flag-us">New York US</span>
-    </div>
-    <div class="chain-item">
-      <span class="chain-arrow">↑ véhicule d'investissement</span>
-      <span class="chain-name">EQT Private Equity Co. LLC</span>
-      <span class="chain-detail">Delaware LLC, enregistrée à la SEC, Form 10-K déposé — actionnaire de contrôle effectif</span>
-      <span class="chain-flag flag-us">Delaware US · SEC</span>
-    </div>
+    <div class="chain-item"><span class="chain-name">SUSE SA</span><span class="chain-detail">Entité opérationnelle produit</span><span class="chain-flag flag-eu">Luxembourg EU</span></div>
+    <div class="chain-item"><span class="chain-name">↑ Marcel New Lux IV</span><span class="chain-detail">Holding de fusion post-délisting Francfort (nov. 2023)</span><span class="chain-flag flag-eu">Luxembourg EU</span></div>
+    <div class="chain-item"><span class="chain-name">↑ EQT Holdings AB</span><span class="chain-detail">Holding suédoise, cotée à Stockholm</span><span class="chain-flag flag-mixed">Suède (coté)</span></div>
+    <div class="chain-item"><span class="chain-name">↑ EQT Partners Inc.</span><span class="chain-detail">Filiale US de gestion — 245 Park Avenue, New York NY</span><span class="chain-flag flag-us">New York US</span></div>
+    <div class="chain-item"><span class="chain-name">↑ EQT Private Equity Co. LLC</span><span class="chain-detail">Delaware LLC, enregistrée SEC, Form 10-K déposé — actionnaire de contrôle effectif</span><span class="chain-flag flag-us">Delaware US · SEC</span></div>
   </div>
 
   <h3>Chaîne d'actionnariat Red Hat</h3>
   <div class="chain">
-    <div class="chain-item">
-      <span class="chain-name">Red Hat Inc.</span>
-      <span class="chain-detail">Entité opérationnelle — Raleigh, NC. Toutes les activités produit, support, R&D</span>
-      <span class="chain-flag flag-us">Delaware C-Corp · US</span>
-    </div>
-    <div class="chain-item">
-      <span class="chain-arrow">↑ filiale à 100%</span>
-      <span class="chain-name">IBM Corp.</span>
-      <span class="chain-detail">Armonk, NY — acquisition 34 Md$ (2019). Red Hat ne publie plus de comptes séparés</span>
-      <span class="chain-flag flag-us">New York US · NYSE</span>
-    </div>
+    <div class="chain-item"><span class="chain-name">Red Hat Inc.</span><span class="chain-detail">Entité opérationnelle — Raleigh NC. Toutes activités produit, support, R&D</span><span class="chain-flag flag-us">Delaware C-Corp · US</span></div>
+    <div class="chain-item"><span class="chain-name">↑ IBM Corp.</span><span class="chain-detail">Armonk NY — acquisition 34 Md$ (2019). Red Hat ne publie plus de comptes séparés</span><span class="chain-flag flag-us">New York US · NYSE</span></div>
   </div>
 
-  <h3>Analyse d'exposition comparative</h3>
   <div class="grid2">
     <div class="vendor-card suse">
       <div class="vc-label suse">SUSE — exposition CLOUD Act</div>
       <ul class="vc-body">
-        <li><strong>Exposition directe :</strong> SUSE SA (LUX) n'est pas un "electronic communication service provider" US — pas de soumission directe au CLOUD Act</li>
-        <li><strong>Exposition indirecte :</strong> EQT Private Equity Co. LLC (Delaware, SEC) contrôle SUSE. Une injonction US pourrait atteindre SUSE via la chaîne si les autorités démontrent le lien de custody/control</li>
-        <li><strong>Atténuation structurelle :</strong> Les données clients on-premise ne transitent pas par des systèmes SUSE — réduction significative de la surface d'attaque juridique</li>
-        <li><strong>Filiales US :</strong> SUSE a des bureaux et employés aux US — ces entités locales sont directement exposées aux ordonnances américaines</li>
+        <li><strong>Exposition directe :</strong> SUSE SA (LUX) n'est pas soumise directement au CLOUD Act en tant qu'entité US</li>
+        <li><strong>Exposition indirecte :</strong> EQT Private Equity Co. LLC (Delaware, SEC) contrôle SUSE — vecteur d'injonction US possible via custody/control</li>
+        <li><strong>Atténuation :</strong> Les données clients on-premise ne transitent pas par des systèmes SUSE — surface d'attaque réduite</li>
+        <li><strong>Filiales US :</strong> Bureaux et employés SUSE aux US — directement exposés aux ordonnances américaines</li>
       </ul>
-      <div style="margin-top: 0.75rem;">
-        <span class="tag tag-warn">Exposition indirecte non nulle</span>
-        <span class="tag tag-ok">On-premise = données hors portée directe</span>
-      </div>
+      <div style="margin-top:0.75rem"><span class="tag tag-warn">Exposition indirecte non nulle</span> <span class="tag tag-ok">On-premise = hors portée directe</span></div>
     </div>
     <div class="vendor-card rh">
       <div class="vc-label rh">Red Hat — exposition CLOUD Act</div>
       <ul class="vc-body">
         <li><strong>Exposition directe et totale :</strong> Red Hat Inc. (Delaware) est pleinement soumis au CLOUD Act — obligation légale sur mandat, quel que soit le pays de stockage</li>
-        <li><strong>Telemetry historique :</strong> Les données OCP Insights transitaient vers l'infrastructure US Red Hat. L'annonce "on-prem telemetry" (mai 2026) corrige partiellement ce point — non GA global</li>
-        <li><strong>Customer Portal US :</strong> Abonnements, entitlements, CVE access — toujours hébergés infrastructure AWS/US. Ces métadonnées opérationnelles sont accessibles aux autorités US</li>
-        <li><strong>IBM Sovereign Core :</strong> Revendique un control plane opéré par le client — mais le code source (Red Hat Inc. US) reste soumis aux lois US sur l'export et la modification</li>
+        <li><strong>Telemetry historique :</strong> OCP Insights transitait vers infrastructure US. Annonce "on-prem telemetry" mai 2026 — correctif partiel, non GA global</li>
+        <li><strong>Customer Portal US :</strong> Abonnements, entitlements, CVE access — hébergés infrastructure AWS/US, métadonnées accessibles aux autorités US</li>
+        <li><strong>IBM Sovereign Core :</strong> Control plane opéré par le client — mais le code source (Red Hat Inc. US) reste soumis aux lois US sur l'export</li>
       </ul>
-      <div style="margin-top: 0.75rem;">
-        <span class="tag tag-danger">Exposition directe et documentée</span>
-        <span class="tag tag-warn">Customer Portal : vecteur résiduel US</span>
-      </div>
+      <div style="margin-top:0.75rem"><span class="tag tag-danger">Exposition directe et documentée</span> <span class="tag tag-warn">Customer Portal : vecteur résiduel US</span></div>
     </div>
   </div>
 
-  <div class="alert alert-danger"><strong>SecNumCloud — les deux sont exclus :</strong> La qualification SecNumCloud de l'ANSSI exige une entité sans lien capitalistique avec un pays tiers considéré à risque. Ni SUSE (contrôle EQT/Delaware) ni Red Hat (filiale IBM/Delaware) ne satisfont ce critère. Pour les OIV/OIE français et les données les plus sensibles, il n'existe pas d'alternative souveraine complète chez ces deux acteurs.</div>
+  <div class="alert alert-danger"><strong>SecNumCloud — les deux sont exclus :</strong> La qualification ANSSI SecNumCloud exige une entité sans lien capitalistique avec un pays tiers considéré à risque. Ni SUSE (contrôle EQT/Delaware) ni Red Hat (filiale IBM/Delaware) ne satisfont ce critère. Pour les OIV/OIE français et les données les plus sensibles, il n'existe pas d'alternative souveraine complète chez ces deux acteurs.</div>
 </div>
 
-<!-- SECTION 3 — BLOCAGE -->
+<!-- SECTION 3 -->
 <div class="section" id="blocage">
   <h2>3. Blocage et continuité opérationnelle</h2>
-  <p>La question centrale pour un opérateur comme Orange : <em>si la relation commerciale est interrompue — résiliation, faillite, injonction légale, cession à un repreneur hostile — la plateforme continue-t-elle à fonctionner ?</em></p>
+  <p>Question centrale : si la relation commerciale est interrompue — résiliation, faillite, injonction légale — la plateforme continue-t-elle à fonctionner ?</p>
 
-  <h3>Mécanismes de blocage SUSE / RKE2</h3>
-  <p><strong>Licence Apache 2.0 sur tous les composants principaux</strong> (RKE2, Rancher, K3s, Longhorn). Si le contrat SUSE Rancher Prime expire, la plateforme continue de fonctionner. Seuls l'accès aux mises à jour officielles et le support commercial sont perdus. Il n'existe pas de mécanisme de validation en ligne, pas de pull secret liant le fonctionnement à un compte actif.</p>
-  <p>La <strong>migration de prix 2025</strong> vers le modèle CPU/vCPU est documentée avec des hausses de 4 à 9x pour certains clients enterprise. C'est un risque financier réel, mais pas un blocage technique — la sortie vers la version community (non supportée) reste possible.</p>
-
-  <h3>Mécanismes de blocage Red Hat OCP</h3>
-  <p><strong>Le pull secret</strong> est le point de coupure le plus direct : l'accès à <code>registry.redhat.io</code> est conditionné à un abonnement actif. Sans abonnement, le cluster continue de tourner mais ne peut plus mettre à jour ses opérateurs ni accéder aux images certifiées Red Hat. Pour une infrastructure 5G Core avec des CNF certifiées Red Hat, cela bloque les mises à jour de sécurité.</p>
-  <p><strong>RHCOS (Red Hat Enterprise Linux CoreOS)</strong> est imposé sur les nœuds control plane OCP. Il n'est pas remplaçable par un autre OS sans migration complète de la plateforme. Cette contrainte n'existe pas chez SUSE/RKE2 où les nœuds peuvent tourner sur SLES, Ubuntu, ou RHEL.</p>
-  <p>Dans un <strong>scénario de sanction OFAC/BIS</strong> américain sur une entité cliente (hypothèse pertinente pour un opérateur télécoms avec des partenaires internationaux), Red Hat Inc. peut être contraint par la loi américaine de suspendre l'accès aux abonnements — indépendamment des termes du contrat commercial.</p>
+  <div class="grid2">
+    <div class="vendor-card suse">
+      <div class="vc-label suse">SUSE / RKE2 — mécanismes de blocage</div>
+      <ul class="vc-body">
+        <li><strong>Licence Apache 2.0</strong> sur tous les composants principaux (RKE2, Rancher, K3s, Longhorn). Le cluster tourne sans abonnement actif</li>
+        <li><strong>Pas de pull secret</strong> liant le fonctionnement à un compte actif</li>
+        <li><strong>Migration de prix 2025</strong> vers CPU/vCPU : hausses documentées de 4 à 9x pour certains clients enterprise. Risque financier, pas de blocage technique</li>
+        <li><strong>Exit community :</strong> passage à la version non supportée possible légalement</li>
+      </ul>
+      <div style="margin-top:0.75rem"><span class="tag tag-ok">Pas de kill switch technique</span> <span class="tag tag-ok">Fork légalement possible</span></div>
+    </div>
+    <div class="vendor-card rh">
+      <div class="vc-label rh">Red Hat OCP — mécanismes de blocage</div>
+      <ul class="vc-body">
+        <li><strong>Pull secret :</strong> accès à registry.redhat.io conditionné à l'abonnement actif. Sans abonnement : pas de mises à jour, pas d'images certifiées</li>
+        <li><strong>RHCOS imposé</strong> sur les nœuds control plane — non remplaçable sans migration complète</li>
+        <li><strong>Sanction OFAC/BIS :</strong> Red Hat Inc. peut être contraint de suspendre l'accès aux abonnements par la loi américaine, indépendamment du contrat commercial</li>
+        <li><strong>OKD :</strong> fallback community possible mais décalé de version, sans certifications opérateurs Red Hat</li>
+      </ul>
+      <div style="margin-top:0.75rem"><span class="tag tag-danger">Pull secret = point de coupure</span> <span class="tag tag-danger">RHCOS non remplaçable sans migration</span></div>
+    </div>
+  </div>
 
   <table class="comp-table">
-    <tr>
-      <th class="dim-th">Scénario</th>
-      <th class="suse-th">SUSE / RKE2</th>
-      <th class="rh-th">Red Hat OCP</th>
-    </tr>
-    <tr>
-      <td class="dim-cell">Expiration abonnement</td>
-      <td class="suse-cell">Cluster tourne. Pas de mises à jour officielles. <span class="tag tag-ok">Continuité</span></td>
-      <td>Cluster tourne mais pull secret expiré. Pas d'images certifiées. <span class="tag tag-warn">Dégradé</span></td>
-    </tr>
-    <tr>
-      <td class="dim-cell">Résiliation contractuelle</td>
-      <td class="suse-cell">Apache 2.0 — usage illimité sans vendor. <span class="tag tag-ok">Autonomie totale</span></td>
-      <td>Accès registry coupé. Migration vers OKD requise. <span class="tag tag-danger">Migration lourde</span></td>
-    </tr>
-    <tr>
-      <td class="dim-cell">Injonction juridique US</td>
-      <td class="suse-cell">Logiciel distribué on-prem — hors portée directe. <span class="tag tag-ok">Faible risque</span></td>
-      <td>Red Hat Inc. (US) peut être contraint de suspendre abonnements. <span class="tag tag-danger">Risque réel</span></td>
-    </tr>
-    <tr>
-      <td class="dim-cell">Faillite / cession vendor</td>
-      <td class="suse-cell">Code Apache 2.0 survit au vendor. Fork légal possible. <span class="tag tag-ok">Résilient</span></td>
-      <td>OCP dépend de Red Hat Inc. — OKD comme fallback non certifié. <span class="tag tag-warn">Dégradé</span></td>
-    </tr>
-    <tr>
-      <td class="dim-cell">Hausse tarifaire unilatérale</td>
-      <td>Passage à community possible (sans support). Migration vers vanilla K8s aisée. <span class="tag tag-warn">Coût transition</span></td>
-      <td>APIs propriétaires créent un coût de sortie élevé. <span class="tag tag-danger">Lock-in élevé</span></td>
-    </tr>
+    <tr><th>Scénario</th><th class="suse-th">SUSE / RKE2</th><th class="rh-th">Red Hat OCP</th></tr>
+    <tr><td class="dim-cell">Expiration abonnement</td><td>Cluster tourne. <span class="tag tag-ok">Continuité</span></td><td>Pull secret expiré. Pas d'images certifiées. <span class="tag tag-warn">Dégradé</span></td></tr>
+    <tr><td class="dim-cell">Résiliation contractuelle</td><td>Apache 2.0 — usage illimité sans vendor. <span class="tag tag-ok">Autonomie</span></td><td>Accès registry coupé. Migration vers OKD. <span class="tag tag-danger">Migration lourde</span></td></tr>
+    <tr><td class="dim-cell">Injonction juridique US</td><td>Logiciel on-prem distribué — hors portée directe. <span class="tag tag-ok">Faible risque</span></td><td>Red Hat Inc. (US) peut être contraint. <span class="tag tag-danger">Risque réel</span></td></tr>
+    <tr><td class="dim-cell">Faillite / cession vendor</td><td>Code Apache 2.0 survit au vendor. Fork légal. <span class="tag tag-ok">Résilient</span></td><td>OCP dépend de Red Hat Inc. <span class="tag tag-warn">Dégradé</span></td></tr>
+    <tr><td class="dim-cell">Hausse tarifaire unilatérale</td><td>Migration vers community possible. <span class="tag tag-warn">Coût transition</span></td><td>APIs propriétaires = coût de sortie élevé. <span class="tag tag-danger">Lock-in fort</span></td></tr>
   </table>
 </div>
 
-<!-- SECTION 4 — AUTONOMIE TECHNIQUE -->
+<!-- SECTION 4 -->
 <div class="section" id="autonomie">
   <h2>4. Autonomie technique et portabilité</h2>
 
   <h3>Couplage logiciel et APIs propriétaires</h3>
-  <p>C'est la dimension la plus structurante pour le coût de sortie à long terme. RKE2 utilise les APIs Kubernetes upstream sans modification propriétaire — les workloads sont portables vers n'importe quelle distribution CNCF-conformante. OCP ajoute plusieurs couches propriétaires qui créent une friction de sortie significative.</p>
-
   <div class="grid2">
     <div class="vendor-card suse">
-      <div class="vc-label suse">SUSE / RKE2 — couplage</div>
+      <div class="vc-label suse">SUSE / RKE2 — couplage faible</div>
       <ul class="vc-body">
         <li>APIs Kubernetes upstream pures — zéro abstraction propriétaire</li>
-        <li>Ingress : Nginx ou Traefik au choix — standard K8s</li>
+        <li>Ingress : Nginx ou Traefik standard</li>
         <li>CNI : Cilium, Multus — projets CNCF standards</li>
-        <li>Storage : Longhorn (open source SUSE) ou n'importe quel CSI</li>
-        <li><strong>Migration sortie :</strong> migration du management plane uniquement — les workloads ne bougent pas</li>
+        <li>Storage : Longhorn (open source) ou tout CSI compatible</li>
+        <li><strong>Migration sortie :</strong> uniquement le management plane — les workloads ne bougent pas</li>
       </ul>
     </div>
     <div class="vendor-card rh">
-      <div class="vc-label rh">Red Hat OCP — couplage</div>
+      <div class="vc-label rh">Red Hat OCP — couplage fort</div>
       <ul class="vc-body">
         <li>SecurityContextConstraints (remplacent PodSecurityStandards) — à convertir</li>
-        <li>Routes (coexistent avec Ingress) — pas de standard K8s</li>
+        <li>Routes (coexistent avec Ingress) — non standard K8s</li>
         <li>DeploymentConfigs (dépréciés en 4.14 mais présents en production existante)</li>
         <li>OLM (Operator Lifecycle Manager) — spécifique OCP</li>
-        <li>OpenShift Pipelines (surcouche Tekton) — rebuild CI/CD requis</li>
-        <li><strong>Migration sortie :</strong> conversion SCC→PSS, Routes→Ingress, rebuild pipelines, changement OS workers. Effort estimé : plusieurs mois en production</li>
+        <li><strong>Migration sortie :</strong> conversion SCC→PSS, Routes→Ingress, rebuild CI/CD, changement OS workers — plusieurs mois en production</li>
       </ul>
     </div>
   </div>
 
   <h3>Capacité de maintenance autonome sans le vendor</h3>
-  <p>La question critique pour un OIV : combien de temps peut-on maintenir la plateforme de façon autonome et sécurisée si la relation avec le vendor est interrompue ?</p>
-  <p>Pour <strong>SUSE/RKE2</strong> : l'intégralité du code source est sur GitHub sous Apache 2.0. Les CVE peuvent être trackées via les advisories upstream CNCF. Les compétences requises sont des compétences K8s standards — le marché des talents est large. La contrainte est la roadmap des composants additionnels (NeuVector, Harvester) sous PE ownership.</p>
-  <p>Pour <strong>Red Hat OCP</strong> : les patches de sécurité RHCOS passent obligatoirement par les canaux Red Hat (Customer Portal actif requis). Les builds officiels certifiés sont signés par Red Hat Inc. (US) — les signatures sont issues d'une infrastructure de build américaine. L'écosystème de compétences est Red Hat-centrique, avec un fort couplage aux certifications propriétaires.</p>
+  <p>Pour <strong>SUSE/RKE2</strong> : code source intégral sur GitHub sous Apache 2.0, CVE trackées via advisories CNCF upstream, compétences K8s standards disponibles sur le marché. Contrainte : roadmap des composants additionnels sous pression PE (EQT).</p>
+  <p>Pour <strong>Red Hat OCP</strong> : les patches RHCOS passent obligatoirement par les canaux Red Hat (Customer Portal actif requis). Les builds officiels certifiés sont signés par Red Hat Inc. (US). L'écosystème de compétences est Red Hat-centrique, avec fort couplage aux certifications propriétaires.</p>
 </div>
 
-<!-- SECTION 5 — SUPPORT -->
+<!-- SECTION 5 -->
 <div class="section" id="support">
   <h2>5. Souveraineté du support opérationnel</h2>
-  <p>Les deux acteurs proposent une offre de support "souverain" pour l'UE. Les périmètres sont comparables en surface ; les différences sont dans l'architecture du workflow de support et dans le contractant juridique.</p>
 
   <div class="grid2">
     <div class="vendor-card suse">
       <div class="vc-label suse">SUSE Sovereign Premium Support</div>
       <ul class="vc-body">
         <li>Ingénieurs EU-based, données de support sur serveurs EU</li>
-        <li>Add-on commercial au support standard</li>
-        <li>Contractant : SUSE SA (Luxembourg) — entité EU</li>
+        <li>Contractant : <strong>SUSE SA (Luxembourg)</strong> — entité EU</li>
         <li>Vérifiabilité : déclaratif — pas de certification tierce publiée</li>
-        <li>Historique : offre récente, peu de REX clients publics</li>
+        <li>Offre récente, peu de REX clients publics</li>
       </ul>
-      <div style="margin-top: 0.75rem;">
-        <span class="tag tag-ok">Contractant EU</span>
-        <span class="tag tag-warn">Non certifié indépendamment</span>
-      </div>
+      <div style="margin-top:0.75rem"><span class="tag tag-ok">Contractant EU</span> <span class="tag tag-warn">Non certifié indépendamment</span></div>
     </div>
     <div class="vendor-card rh">
       <div class="vc-label rh">Red Hat Confirmed Sovereign Support EU</div>
       <ul class="vc-body">
         <li>Support exclusivement par citoyens EU, depuis l'UE (GA avril 2026)</li>
-        <li>Re-ingénierie du modèle "follow-the-sun" — données diagnostic restent en EU</li>
-        <li>Contractant : Red Hat Inc. (Delaware) — entité US</li>
-        <li>Architecture documentée — "verifiable regional control"</li>
-        <li>Mais : métadonnées de contrat et abonnements toujours hébergés infrastructure US</li>
+        <li>Re-ingénierie "follow-the-sun" — données diagnostic restent en EU</li>
+        <li>Contractant : <strong>Red Hat Inc. (Delaware)</strong> — entité US</li>
+        <li>Architecture documentée — mais métadonnées de contrat et abonnements toujours sur infrastructure US</li>
       </ul>
-      <div style="margin-top: 0.75rem;">
-        <span class="tag tag-ok">Architecture documentée</span>
-        <span class="tag tag-danger">Contractant US résiduel</span>
-      </div>
+      <div style="margin-top:0.75rem"><span class="tag tag-ok">Architecture documentée</span> <span class="tag tag-danger">Contractant US résiduel</span></div>
     </div>
   </div>
 
-  <div class="alert alert-warn"><strong>Paradoxe Red Hat Support :</strong> Red Hat a réingénéré avec soin son workflow de support pour que les données de diagnostic ne franchissent pas les frontières EU. Mais le contrat lui-même est signé avec Red Hat Inc. (US), les abonnements sont gérés depuis le Customer Portal (AWS US), et les métadonnées de facturation et d'entitlements restent soumises à la juridiction américaine. La souveraineté du workflow de support ne résout pas la souveraineté du contrat.</div>
+  <div class="alert alert-warn"><strong>Paradoxe Red Hat Support :</strong> Red Hat a réingénéré avec soin son workflow pour que les données de diagnostic ne franchissent pas les frontières EU. Mais le contrat est signé avec Red Hat Inc. (US), les abonnements sont gérés depuis le Customer Portal (AWS US), et les métadonnées de facturation restent soumises à la juridiction américaine. La souveraineté du workflow de support ne résout pas la souveraineté du contrat.</div>
 </div>
 
-<!-- SECTION 6 — OPEN SOURCE -->
+<!-- SECTION 6 -->
 <div class="section" id="opensource">
   <h2>6. Contributions open source et dépendance aux acteurs US</h2>
-  <p>La question clé : SUSE (ou un groupement d'acteurs européens) pourrait-il maintenir la stack cloud native sans les contributeurs et organisations US ? La réponse nécessite de distinguer trois niveaux.</p>
 
-  <h3>Niveau 1 — Kubernetes core : non maintenable sans les US</h3>
-  <p>Dans le projet Kubernetes, l'ordre de contribution par volume est : Google, Red Hat, Microsoft, VMware, IBM, SUSE, Amazon, Huawei, Intel, Cisco. SUSE est en 6e position — contributeur significatif, mais pas structurant. La suppression des 5 premiers contributeurs (tous américains) rendrait le projet non viable à court terme. Aucun acteur européen ne peut maintenir Kubernetes core seul.</p>
+  <h3>Niveau 1 — Kubernetes core : non maintenable sans les acteurs US</h3>
+  <p>Ordre de contribution par volume sur Kubernetes : <strong>Google, Red Hat, Microsoft, VMware, IBM, SUSE</strong>, Amazon, Huawei, Intel, Cisco. SUSE est en 6e position — significatif, mais pas structurant. La suppression des 5 premiers contributeurs (tous américains) rendrait le projet non viable à court terme. Aucun acteur européen seul ne peut maintenir Kubernetes core.</p>
 
-  <h3>Niveau 2 — RKE2/Rancher (produit SUSE) : maintenable par SUSE seul</h3>
-  <p>RKE2 et Rancher sont des projets dont SUSE est le mainteneur principal. Le code Apache 2.0 peut être forké et maintenu indépendamment. La question pertinente est la capacité de recrutement et la pérennité des équipes sous pression PE (EQT) — pas la disponibilité légale du code.</p>
+  <h3>Niveau 2 — RKE2/Rancher : maintenable par SUSE seul</h3>
+  <p>RKE2 et Rancher sont des projets dont SUSE est le mainteneur principal. Le code Apache 2.0 peut être forké et maintenu indépendamment. La question est la capacité de recrutement et la pérennité des équipes sous pression PE — pas la disponibilité légale du code.</p>
 
-  <h3>Niveau 3 — Écosystème CNCF adjacent : maintenable partiellement par des acteurs EU</h3>
-  <p>Cilium (réseau CNI, maintenu par Isovalent/Cisco), Prometheus (CNCF neutral), Longhorn (SUSE), Argo (Intuit), OpenTelemetry (multi-vendor). Une coalition d'acteurs européens pourrait théoriquement maintenir ces projets, mais cela représenterait un effort de coordination sans précédent et une rupture avec la gouvernance CNCF existante.</p>
+  <h3>Niveau 3 — Écosystème CNCF adjacent : maintenable partiellement</h3>
+  <p>Cilium (Isovalent/Cisco), Prometheus (CNCF neutral), Longhorn (SUSE), OpenTelemetry (multi-vendor). Une coalition d'acteurs européens pourrait théoriquement maintenir ces projets, mais cela représenterait un effort de coordination sans précédent.</p>
 
-  <div class="alert alert-info"><strong>Position paradoxale de Red Hat :</strong> Red Hat a contribué en novembre 2024 un ensemble complet d'outils containers à la CNCF (Podman, Buildah, Skopeo, Podman Desktop). Cela améliore la neutralité de ces outils — mais aussi réduit la maîtrise propriétaire de Red Hat sur des composants clés de son propre écosystème. En cédant la gouvernance à la CNCF (entité US), Red Hat "neutralise" les outils mais les ancre plus profondément dans la dépendance à la fondation américaine.</div>
+  <div class="alert alert-info"><strong>Position paradoxale de Red Hat :</strong> En contribuant Podman, Buildah, Skopeo à la CNCF (KubeCon NA 2024), Red Hat améliore la neutralité de ces outils — mais les ancre plus profondément dans la dépendance à la fondation américaine. Céder la gouvernance à la CNCF (entité US) "neutralise" les outils tout en renforçant structurellement l'emprise US sur l'écosystème.</div>
 </div>
 
-<!-- SECTION 7 — CNCF -->
+<!-- SECTION 7 — CNCF avec schéma SVG -->
 <div class="section" id="cncf">
   <h2>7. La CNCF et la Linux Foundation : la dépendance systémique ignorée</h2>
-
   <p>Ni SUSE ni Red Hat ne mentionnent dans leurs discours souveraineté la dimension la plus structurante : <strong>la CNCF elle-même est une entité de droit américain</strong>, et les marques des projets clés sont déposées à l'USPTO américain.</p>
 
   <h3>Structure juridique de la CNCF</h3>
-  <p>La CNCF est une <strong>sous-fondation de la Linux Foundation</strong>, constituée en <strong>501(c)6 (business league) aux États-Unis</strong>. Siège : San Francisco, Californie. La Linux Foundation est une entité de droit américain dont le siège est également en Californie.</p>
-  <p>La marque <strong>"Kubernetes"</strong> est déposée à l'USPTO par la Linux Foundation (dépôt n° 4754865 et 6266954 pour K8s). Lors de la rédaction de la gouvernance CNCF, Google avait insisté pour que la Linux Foundation détienne la marque Kubernetes — afin que le contrôle de la marque aille de pair avec une gouvernance communautaire neutre. En pratique, cela signifie que toute distribution commerciale se disant "Certified Kubernetes" dépend d'un programme administré par une entité de droit américain, avec des marques déposées à l'USPTO.</p>
+  <p>La CNCF est une <strong>sous-fondation de la Linux Foundation</strong>, constituée en <strong>501(c)6 (business league) aux États-Unis</strong>. Siège : San Francisco, Californie. La Linux Foundation est une entité de droit américain (Californie). La marque <strong>"Kubernetes"</strong> est déposée à l'USPTO par la Linux Foundation (dépôts n° 4754865 et 6266954 pour K8s). Toute distribution commerciale "Certified Kubernetes" dépend d'un programme administré par une entité de droit américain, avec des marques déposées à l'USPTO.</p>
 
-  <h3>Implications souveraines de la chaîne CNCF</h3>
-  <p>La chaîne de dépendance complète d'un déploiement OCP ou RKE2 est la suivante :</p>
+  <h3>Schéma — Chaîne de dépendance juridique d'un déploiement cloud native</h3>
+  <div class="svg-wrap">
+<svg viewBox="0 0 860 580" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:860px;display:block;margin:0 auto;" role="img" aria-label="Schéma des couches de dépendance juridique d'un déploiement cloud native, de l'infrastructure physique jusqu'au niveau gouvernance CNCF">
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
 
-  <div class="infra-chain">
-    <div class="layer"><span class="layer-name">Infrastructure physique</span><span>→ Datacenter EU (seule couche réellement souveraine)</span><span class="layer-jur flag-eu">EU</span></div>
-    <div class="layer"><span class="layer-name">OS (RHCOS/SLES)</span><span>→ Red Hat Inc. (US) ou SUSE SA (LUX/EQT Delaware)</span><span class="layer-jur flag-mixed">Mixte</span></div>
-    <div class="layer"><span class="layer-name">Container runtime</span><span>→ containerd (CNCF / Linux Foundation, San Francisco)</span><span class="layer-jur flag-us">US 501c6</span></div>
-    <div class="layer"><span class="layer-name">Kubernetes</span><span>→ CNCF / Linux Foundation — marque USPTO, gouvernance US</span><span class="layer-jur flag-us">US 501c6</span></div>
-    <div class="layer"><span class="layer-name">Certification conformité</span><span>→ Programme "Certified Kubernetes" — CNCF / Linux Foundation (US)</span><span class="layer-jur flag-us">US 501c6</span></div>
-    <div class="layer"><span class="layer-name">Registries images</span><span>→ registry.redhat.io (US) ou Docker Hub (Docker Inc., US)</span><span class="layer-jur flag-us">US</span></div>
-    <div class="layer"><span class="layer-name">Telemetry / support</span><span>→ Red Hat Inc. (US) ou SUSE SA+EQT (LUX/Delaware)</span><span class="layer-jur flag-mixed">Mixte</span></div>
+  <!-- Legend -->
+  <rect x="20" y="16" width="14" height="14" rx="2" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="38" y="27" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" fill="#374151">Juridiction EU / neutre</text>
+  <rect x="160" y="16" width="14" height="14" rx="2" fill="#fef3c7" stroke="#fbbf24" stroke-width="1"/>
+  <text x="178" y="27" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" fill="#374151">Juridiction mixte</text>
+  <rect x="290" y="16" width="14" height="14" rx="2" fill="#fee2e2" stroke="#ef4444" stroke-width="1"/>
+  <text x="308" y="27" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" fill="#374151">Juridiction US (CLOUD Act)</text>
+  <rect x="470" y="16" width="14" height="14" rx="2" fill="#fca5a5" stroke="#dc2626" stroke-width="1"/>
+  <text x="488" y="27" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" fill="#374151">Droit US fondationnel (501c6 / USPTO)</text>
+
+  <!-- Row labels -->
+  <text x="20" y="68" font-family="Helvetica Neue, Arial, sans-serif" font-size="10" font-weight="600" fill="#6b7280" letter-spacing="0.08em">COUCHE</text>
+  <text x="220" y="68" font-family="Helvetica Neue, Arial, sans-serif" font-size="10" font-weight="600" fill="#6b7280" letter-spacing="0.08em">SUSE / RKE2</text>
+  <text x="540" y="68" font-family="Helvetica Neue, Arial, sans-serif" font-size="10" font-weight="600" fill="#6b7280" letter-spacing="0.08em">RED HAT OCP</text>
+
+  <!-- Layer 1 — Infrastructure physique -->
+  <rect x="20" y="80" width="820" height="52" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="36" y="101" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" font-weight="700" fill="#1e3a8a">1 — Infrastructure physique</text>
+  <text x="36" y="118" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" fill="#1e40af">Datacenter opérateur (France/EU) — seule couche réellement souveraine</text>
+  <rect x="740" y="88" width="90" height="18" rx="3" fill="#1e40af"/>
+  <text x="785" y="101" font-family="Helvetica Neue, Arial, sans-serif" font-size="10" font-weight="700" fill="white" text-anchor="middle">EU ✓</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="430" y1="132" x2="430" y2="148" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Layer 2 — OS -->
+  <rect x="20" y="150" width="400" height="60" rx="4" fill="#fef3c7" stroke="#fbbf24" stroke-width="1"/>
+  <text x="36" y="170" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" font-weight="700" fill="#92400e">2 — OS workers (SLES)</text>
+  <text x="36" y="186" font-family="Helvetica Neue, Arial, sans-serif" font-size="10" fill="#92400e">SUSE SA (LUX) — contrôle EQT Delaware</text>
+  <text x="36" y="200" font-family="Helvetica Neue, Arial, sans-serif" font-size="10" fill="#92400e">Exposition US indirecte via chaîne actionnariat</text>
+  <rect x="360" y="158" width="50" height="16" rx="2" fill="#fbbf24"/>
+  <text x="385" y="170" font-family="Helvetica Neue, Arial, sans-serif" font-size="9" font-weight="700" fill="white" text-anchor="middle">Mixte</text>
+
+  <rect x="440" y="150" width="400" height="60" rx="4" fill="#fee2e2" stroke="#ef4444" stroke-width="1"/>
+  <text x="456" y="170" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" font-weight="700" fill="#991b1b">2 — OS control plane (RHCOS)</text>
+  <text x="456" y="186" font-family="Helvetica Neue, Arial, sans-serif" font-size="10" fill="#991b1b">Red Hat Inc. (Delaware, US) — filiale IBM Corp.</text>
+  <text x="456" y="200" font-family="Helvetica Neue, Arial, sans-serif" font-size="10" fill="#991b1b">CLOUD Act direct · RHCOS non remplaçable</text>
+  <rect x="770" y="158" width="80" height="16" rx="2" fill="#dc2626"/>
+  <text x="810" y="170" font-family="Helvetica Neue, Arial, sans-serif" font-size="9" font-weight="700" fill="white" text-anchor="middle">US Direct ⚠</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="430" y1="210" x2="430" y2="226" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Layer 3 — Container runtime -->
+  <rect x="20" y="228" width="820" height="52" rx="4" fill="#fee2e2" stroke="#ef4444" stroke-width="1"/>
+  <text x="36" y="249" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" font-weight="700" fill="#991b1b">3 — Container runtime (containerd)</text>
+  <text x="36" y="266" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" fill="#991b1b">Projet CNCF / Linux Foundation — 501(c)6, San Francisco CA. Commun aux deux stacks.</text>
+  <rect x="700" y="236" width="130" height="18" rx="3" fill="#dc2626"/>
+  <text x="765" y="249" font-family="Helvetica Neue, Arial, sans-serif" font-size="9" font-weight="700" fill="white" text-anchor="middle">CNCF · US 501(c)6</text>
+
+  <!-- Arrow 3→4 -->
+  <line x1="430" y1="280" x2="430" y2="296" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Layer 4 — Kubernetes -->
+  <rect x="20" y="298" width="820" height="62" rx="4" fill="#fca5a5" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="36" y="318" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" font-weight="700" fill="#7f1d1d">4 — Kubernetes — gouvernance CNCF / Linux Foundation</text>
+  <text x="36" y="335" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" fill="#7f1d1d">Marque "Kubernetes" déposée à l'USPTO par Linux Foundation (dépôt n° 4754865)</text>
+  <text x="36" y="350" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" fill="#7f1d1d">501(c)6 San Francisco · Governing Board dominé par entités US (Google, Amazon, Microsoft, IBM, Apple...)</text>
+  <rect x="690" y="306" width="140" height="18" rx="3" fill="#7f1d1d"/>
+  <text x="760" y="319" font-family="Helvetica Neue, Arial, sans-serif" font-size="9" font-weight="700" fill="white" text-anchor="middle">USPTO · US 501(c)6 ⚠</text>
+
+  <!-- Arrow 4→5 -->
+  <line x1="430" y1="360" x2="430" y2="376" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Layer 5 — Registry -->
+  <rect x="20" y="378" width="400" height="60" rx="4" fill="#fef3c7" stroke="#fbbf24" stroke-width="1"/>
+  <text x="36" y="398" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" font-weight="700" fill="#92400e">5 — Registry images (SUSE)</text>
+  <text x="36" y="414" font-family="Helvetica Neue, Arial, sans-serif" font-size="10" fill="#92400e">registry.suse.com — hébergement mixte</text>
+  <text x="36" y="428" font-family="Helvetica Neue, Arial, sans-serif" font-size="10" fill="#92400e">Images OCI standards — portabilité maximale</text>
+  <rect x="360" y="386" width="50" height="16" rx="2" fill="#fbbf24"/>
+  <text x="385" y="398" font-family="Helvetica Neue, Arial, sans-serif" font-size="9" font-weight="700" fill="white" text-anchor="middle">Mixte</text>
+
+  <rect x="440" y="378" width="400" height="60" rx="4" fill="#fee2e2" stroke="#ef4444" stroke-width="1"/>
+  <text x="456" y="398" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" font-weight="700" fill="#991b1b">5 — Registry images (Red Hat)</text>
+  <text x="456" y="414" font-family="Helvetica Neue, Arial, sans-serif" font-size="10" fill="#991b1b">registry.redhat.io — hébergé infrastructure US</text>
+  <text x="456" y="428" font-family="Helvetica Neue, Arial, sans-serif" font-size="10" fill="#991b1b">Pull secret requis · accès conditionné à abonnement actif</text>
+  <rect x="770" y="386" width="80" height="16" rx="2" fill="#dc2626"/>
+  <text x="810" y="398" font-family="Helvetica Neue, Arial, sans-serif" font-size="9" font-weight="700" fill="white" text-anchor="middle">US Direct ⚠</text>
+
+  <!-- Arrow 5→6 -->
+  <line x1="430" y1="438" x2="430" y2="454" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Layer 6 — Support / Telemetry -->
+  <rect x="20" y="456" width="400" height="60" rx="4" fill="#fef3c7" stroke="#fbbf24" stroke-width="1"/>
+  <text x="36" y="476" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" font-weight="700" fill="#92400e">6 — Support / Telemetry (SUSE)</text>
+  <text x="36" y="492" font-family="Helvetica Neue, Arial, sans-serif" font-size="10" fill="#92400e">SUSE SA (LUX) · Sovereign Premium Support EU-based</text>
+  <text x="36" y="506" font-family="Helvetica Neue, Arial, sans-serif" font-size="10" fill="#92400e">On-prem : pas de telemetry active vers SUSE</text>
+  <rect x="360" y="464" width="50" height="16" rx="2" fill="#fbbf24"/>
+  <text x="385" y="476" font-family="Helvetica Neue, Arial, sans-serif" font-size="9" font-weight="700" fill="white" text-anchor="middle">Mixte</text>
+
+  <rect x="440" y="456" width="400" height="60" rx="4" fill="#fee2e2" stroke="#ef4444" stroke-width="1"/>
+  <text x="456" y="476" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" font-weight="700" fill="#991b1b">6 — Support / Telemetry (Red Hat)</text>
+  <text x="456" y="492" font-family="Helvetica Neue, Arial, sans-serif" font-size="10" fill="#991b1b">Red Hat Inc. (Delaware) · Customer Portal AWS US</text>
+  <text x="456" y="506" font-family="Helvetica Neue, Arial, sans-serif" font-size="10" fill="#991b1b">Insights on-prem annoncé, non GA global · contrat US</text>
+  <rect x="770" y="464" width="80" height="16" rx="2" fill="#dc2626"/>
+  <text x="810" y="476" font-family="Helvetica Neue, Arial, sans-serif" font-size="9" font-weight="700" fill="white" text-anchor="middle">US Direct ⚠</text>
+
+  <!-- Arrow 6→7 -->
+  <line x1="430" y1="516" x2="430" y2="532" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Layer 7 — Certification conformité -->
+  <rect x="20" y="534" width="820" height="38" rx="4" fill="#fca5a5" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="36" y="549" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" font-weight="700" fill="#7f1d1d">7 — Certification conformité Kubernetes — programme CNCF / Linux Foundation (US 501c6)</text>
+  <text x="36" y="564" font-family="Helvetica Neue, Arial, sans-serif" font-size="10" fill="#7f1d1d">Toute distribution "Certified Kubernetes" dépend d'un programme administré par une entité US · marque USPTO</text>
+</svg>
   </div>
+  <p class="svg-caption">Fig. 1 — Chaîne de dépendance juridique d'un déploiement cloud native (SUSE/RKE2 à gauche, Red Hat OCP à droite). Les couches 3, 4 et 7 sont communes aux deux stacks et ancrent structurellement tout déploiement cloud native dans le droit américain, indépendamment du choix de distribution.</p>
 
-  <div class="alert alert-danger"><strong>Conclusion structurelle :</strong> La seule couche qui échappe à une emprise juridique américaine directe est l'infrastructure physique. Toutes les autres couches sont ancrées dans le droit américain à des degrés divers. Les discours "souveraineté" de SUSE et Red Hat adressent des surfaces d'exposition réelles et significatives — mais ils ne résolvent pas cette dépendance systémique fondamentale. Cela ne les rend pas sans valeur : réduire la surface d'exposition reste un objectif légitime. Mais prétendre atteindre une souveraineté complète avec ces stacks est inexact.</div>
+  <div class="alert alert-danger"><strong>Conclusion structurelle :</strong> La seule couche qui échappe à une emprise juridique américaine directe est l'infrastructure physique. Les couches 3 (containerd), 4 (Kubernetes/CNCF) et 7 (certification conformité) sont communes aux deux stacks et irréductiblement ancrées dans le droit américain. Les discours souveraineté de SUSE et Red Hat adressent des surfaces d'exposition réelles — mais ils ne résolvent pas cette dépendance systémique fondamentale.</div>
 
   <h3>Risque de gouvernance CNCF : le Governing Board</h3>
-  <p>Le Governing Board de la CNCF est composé de représentants des membres platine et gold. Les membres platine 2025-2026 incluent Google, Amazon, Microsoft, Red Hat, VMware, Alibaba, Apple, Arm, Cisco. La majorité des sièges sont tenus par des entités américaines ou à investissement majoritairement américain. Théoriquement, sous pression politique, les États-Unis pourraient influencer les décisions de gouvernance de la fondation — y compris sur les standards de conformité ou l'accès au programme de certification.</p>
+  <p>Le Governing Board de la CNCF est composé de représentants des membres platine et gold. Les membres platine 2025-2026 incluent Google, Amazon, Microsoft, Red Hat, VMware, Alibaba, Apple, Arm, Cisco. La majorité des sièges sont tenus par des entités américaines. Sous pression politique, les États-Unis pourraient théoriquement influencer les décisions de gouvernance — y compris les standards de conformité ou l'accès au programme de certification "Certified Kubernetes".</p>
 </div>
 
-<!-- SECTION 8 — SYNTHÈSE -->
+<!-- SECTION 8 -->
 <div class="section" id="synthese">
   <h2>8. Synthèse scorée et recommandations</h2>
-
-  <h3>Score de souveraineté réelle — 6 dimensions (0–10)</h3>
-  <p style="font-size: 13px; color: var(--text3); font-family: 'Helvetica Neue', Arial, sans-serif; margin-bottom: 1.25rem;">Évaluation basée sur l'analyse juridique, les annonces publiques vérifiées, et l'architecture documentée des solutions. Score 10 = souveraineté complète et vérifiable.</p>
+  <p style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:13px;color:var(--text3);margin-bottom:1.25rem;">Évaluation basée sur l'analyse juridique, les annonces publiques vérifiées, et l'architecture documentée des solutions. Score 10 = souveraineté complète et vérifiable.</p>
 
   <div class="scores">
     <div class="score-row">
       <div class="score-label">Juridique / exposition CLOUD Act (pondération : 30%)</div>
       <div class="score-bars">
-        <div class="score-bar-row"><span class="bar-label" style="color: var(--suse);">SUSE</span><div class="bar-track"><div class="bar-fill bar-suse" style="width: 55%"></div></div><span class="bar-val">5.5</span></div>
-        <div class="score-bar-row"><span class="bar-label" style="color: var(--rh);">Red Hat</span><div class="bar-track"><div class="bar-fill bar-rh" style="width: 25%"></div></div><span class="bar-val">2.5</span></div>
+        <div class="score-bar-row"><span class="bar-label" style="color:var(--suse)">SUSE</span><div class="bar-track"><div class="bar-fill bar-suse" style="width:55%"></div></div><span class="bar-val">5.5</span></div>
+        <div class="score-bar-row"><span class="bar-label" style="color:var(--rh)">Red Hat</span><div class="bar-track"><div class="bar-fill bar-rh" style="width:25%"></div></div><span class="bar-val">2.5</span></div>
       </div>
     </div>
     <div class="score-row">
       <div class="score-label">Blocage / continuité opérationnelle (pondération : 25%)</div>
       <div class="score-bars">
-        <div class="score-bar-row"><span class="bar-label" style="color: var(--suse);">SUSE</span><div class="bar-track"><div class="bar-fill bar-suse" style="width: 80%"></div></div><span class="bar-val">8.0</span></div>
-        <div class="score-bar-row"><span class="bar-label" style="color: var(--rh);">Red Hat</span><div class="bar-track"><div class="bar-fill bar-rh" style="width: 40%"></div></div><span class="bar-val">4.0</span></div>
+        <div class="score-bar-row"><span class="bar-label" style="color:var(--suse)">SUSE</span><div class="bar-track"><div class="bar-fill bar-suse" style="width:80%"></div></div><span class="bar-val">8.0</span></div>
+        <div class="score-bar-row"><span class="bar-label" style="color:var(--rh)">Red Hat</span><div class="bar-track"><div class="bar-fill bar-rh" style="width:40%"></div></div><span class="bar-val">4.0</span></div>
       </div>
     </div>
     <div class="score-row">
       <div class="score-label">Autonomie technique / portabilité exit (pondération : 20%)</div>
       <div class="score-bars">
-        <div class="score-bar-row"><span class="bar-label" style="color: var(--suse);">SUSE</span><div class="bar-track"><div class="bar-fill bar-suse" style="width: 80%"></div></div><span class="bar-val">8.0</span></div>
-        <div class="score-bar-row"><span class="bar-label" style="color: var(--rh);">Red Hat</span><div class="bar-track"><div class="bar-fill bar-rh" style="width: 35%"></div></div><span class="bar-val">3.5</span></div>
+        <div class="score-bar-row"><span class="bar-label" style="color:var(--suse)">SUSE</span><div class="bar-track"><div class="bar-fill bar-suse" style="width:80%"></div></div><span class="bar-val">8.0</span></div>
+        <div class="score-bar-row"><span class="bar-label" style="color:var(--rh)">Red Hat</span><div class="bar-track"><div class="bar-fill bar-rh" style="width:35%"></div></div><span class="bar-val">3.5</span></div>
       </div>
     </div>
     <div class="score-row">
       <div class="score-label">Souveraineté du support opérationnel (pondération : 10%)</div>
       <div class="score-bars">
-        <div class="score-bar-row"><span class="bar-label" style="color: var(--suse);">SUSE</span><div class="bar-track"><div class="bar-fill bar-suse" style="width: 50%"></div></div><span class="bar-val">5.0</span></div>
-        <div class="score-bar-row"><span class="bar-label" style="color: var(--rh);">Red Hat</span><div class="bar-track"><div class="bar-fill bar-rh" style="width: 55%"></div></div><span class="bar-val">5.5</span></div>
+        <div class="score-bar-row"><span class="bar-label" style="color:var(--suse)">SUSE</span><div class="bar-track"><div class="bar-fill bar-suse" style="width:50%"></div></div><span class="bar-val">5.0</span></div>
+        <div class="score-bar-row"><span class="bar-label" style="color:var(--rh)">Red Hat</span><div class="bar-track"><div class="bar-fill bar-rh" style="width:55%"></div></div><span class="bar-val">5.5</span></div>
       </div>
     </div>
     <div class="score-row">
       <div class="score-label">Supply chain logicielle et SBOM (pondération : 10%)</div>
       <div class="score-bars">
-        <div class="score-bar-row"><span class="bar-label" style="color: var(--suse);">SUSE</span><div class="bar-track"><div class="bar-fill bar-suse" style="width: 55%"></div></div><span class="bar-val">5.5</span></div>
-        <div class="score-bar-row"><span class="bar-label" style="color: var(--rh);">Red Hat</span><div class="bar-track"><div class="bar-fill bar-rh" style="width: 60%"></div></div><span class="bar-val">6.0</span></div>
+        <div class="score-bar-row"><span class="bar-label" style="color:var(--suse)">SUSE</span><div class="bar-track"><div class="bar-fill bar-suse" style="width:55%"></div></div><span class="bar-val">5.5</span></div>
+        <div class="score-bar-row"><span class="bar-label" style="color:var(--rh)">Red Hat</span><div class="bar-track"><div class="bar-fill bar-rh" style="width:60%"></div></div><span class="bar-val">6.0</span></div>
       </div>
     </div>
     <div class="score-row">
       <div class="score-label">Indépendance dépendances systémiques CNCF/LF (pondération : 5%)</div>
       <div class="score-bars">
-        <div class="score-bar-row"><span class="bar-label" style="color: var(--suse);">SUSE</span><div class="bar-track"><div class="bar-fill bar-suse" style="width: 40%"></div></div><span class="bar-val">4.0</span></div>
-        <div class="score-bar-row"><span class="bar-label" style="color: var(--rh);">Red Hat</span><div class="bar-track"><div class="bar-fill bar-rh" style="width: 30%"></div></div><span class="bar-val">3.0</span></div>
+        <div class="score-bar-row"><span class="bar-label" style="color:var(--suse)">SUSE</span><div class="bar-track"><div class="bar-fill bar-suse" style="width:40%"></div></div><span class="bar-val">4.0</span></div>
+        <div class="score-bar-row"><span class="bar-label" style="color:var(--rh)">Red Hat</span><div class="bar-track"><div class="bar-fill bar-rh" style="width:30%"></div></div><span class="bar-val">3.0</span></div>
       </div>
     </div>
   </div>
 
   <table class="comp-table">
     <tr>
-      <th class="dim-th">Score pondéré global</th>
+      <th>Score pondéré global</th>
       <th class="suse-th">SUSE — 6.7 / 10</th>
       <th class="rh-th">Red Hat — 3.9 / 10</th>
     </tr>
     <tr>
       <td class="dim-cell">Point fort différenciant</td>
-      <td>Licence Apache 2.0 + on-premise sans telemetry = souveraineté de fait sur les déploiements</td>
-      <td>Supply chain logicielle plus avancée (CDN EU), discours souveraineté plus structuré, support EU certifié GA</td>
+      <td>Apache 2.0 + on-premise sans telemetry = souveraineté de fait. Pas de kill switch.</td>
+      <td>Supply chain EU avancée (CDN), discours structuré, support EU certifié GA, ancrage IBM.</td>
     </tr>
     <tr>
       <td class="dim-cell">Risque principal</td>
-      <td>Contrôle EQT (Delaware LLC) = exposition CLOUD Act indirecte non nulle. Pression PE sur roadmap</td>
-      <td>Red Hat Inc. (Delaware) = exposition CLOUD Act directe et irréductible. Pull secret = kill switch opérationnel</td>
+      <td>Contrôle EQT (Delaware LLC) = exposition CLOUD Act indirecte. Pression PE sur roadmap.</td>
+      <td>Red Hat Inc. (Delaware) = CLOUD Act direct et irréductible. Pull secret = kill switch opérationnel.</td>
     </tr>
     <tr>
-      <td class="dim-cell">Adéquation OIV/SecNumCloud</td>
-      <td colspan="2" style="text-align: center; font-weight: 600; color: var(--danger);">Aucun des deux ne satisfait les critères d'indépendance capitalistique SecNumCloud</td>
+      <td class="dim-cell">Adéquation OIV / SecNumCloud</td>
+      <td colspan="2" style="text-align:center;font-weight:600;color:var(--danger);">Aucun des deux ne satisfait les critères d'indépendance capitalistique SecNumCloud</td>
     </tr>
   </table>
 
   <div class="verdict">
-    <div class="verdict-title">Recommandation pour RFP CaaS / Usage interne DTR</div>
+    <div class="verdict-title">Recommandation pour RFP CaaS</div>
     <p><strong>Sur la souveraineté stricto sensu :</strong> SUSE/RKE2 offre une souveraineté de fait supérieure pour les déploiements on-premise — absence de kill switch technique, portabilité maximale, exposition juridique indirecte plutôt que directe. Pour une infrastructure 5G Core en environnement sensible, cela constitue un avantage structurel réel.</p>
-    <p><strong>Sur le discours et l'accompagnement :</strong> Red Hat investit davantage dans la preuve de sa souveraineté (architecture documentée, outils d'évaluation, CDN EU) et dispose du soutien IBM pour l'industrialisation. Ce delta reflète des moyens différents, pas nécessairement une réalité juridique différente.</p>
-    <p><strong>Ce qu'aucun des deux ne peut promettre :</strong> L'indépendance vis-à-vis de la juridiction américaine sur la couche fondationnelle (CNCF/Linux Foundation, marque Kubernetes, containerd). Pour les données relevant des articles 19 et 20 de la LPM (systèmes d'importance vitale), il n'existe pas de solution complète chez ces acteurs — et le dire ouvertement dans un RFP est plus honnête que de se laisser porter par des discours marketing bien construits.</p>
+    <p><strong>Sur le discours et l'accompagnement :</strong> Red Hat investit davantage dans la preuve de sa souveraineté (architecture documentée, outils d'évaluation, CDN EU) et dispose du soutien IBM pour l'industrialisation. Ce delta reflète des moyens différents, pas une réalité juridique différente.</p>
+    <p><strong>Ce qu'aucun des deux ne peut promettre :</strong> L'indépendance vis-à-vis de la juridiction américaine sur les couches fondationnelles (CNCF/Linux Foundation, marque Kubernetes, containerd). Pour les données relevant des articles 19 et 20 de la LPM (systèmes d'importance vitale), il n'existe pas de solution complète chez ces acteurs — et le dire ouvertement dans un RFP est plus honnête que de se laisser porter par des discours marketing bien construits.</p>
   </div>
 </div>
 
-<!-- FOOTNOTES -->
 <div class="footnotes">
-  <p><strong>Sources principales :</strong> SUSE Communities blog (Andreas Prins, mai 2026) · Red Hat Summit 2026 announcements (BusinessWire, mai 2026) · Red Hat Confirmed Sovereign Support GA (Red Hat blog, avril 2026) · EQT Private Equity Co LLC Form 10-K/10-Q (SEC.gov, 2024-2025) · SUSE Investor Relations (délisting Francfort, nov. 2023) · CNCF FAQ et Charter (cncf.io) · Linux Foundation Trademarks (linuxfoundation.org) · Rancher vs OpenShift comparison (cloudfleet.ai, avril 2026) · Red Hat Evolving Licensing Model (redwoodcompliance.com, 2025) · CLOUD Act / Patriot Act analysis (dzone.com, Osler, Linklaters)</p>
-  <p><strong>Statut :</strong> Document de travail interne — usage DTR / STarc / RSM. Non destiné à diffusion externe en l'état.</p>
+  <p><strong>Sources :</strong> SUSE Communities blog (Andreas Prins, mai 2026) · Red Hat Summit 2026 (BusinessWire, mai 2026) · Red Hat Confirmed Sovereign Support GA (Red Hat blog, avril 2026) · EQT Private Equity Co LLC Form 10-K/10-Q (SEC.gov, 2024-2025) · SUSE Investor Relations (délisting nov. 2023) · CNCF Charter (cncf.io) · Linux Foundation Trademarks (linuxfoundation.org) · Rancher vs OpenShift (cloudfleet.ai, avril 2026) · Red Hat Licensing Model (redwoodcompliance.com, 2025) · CLOUD Act analysis (dzone.com, Osler, Linklaters)</p>
   <p><strong>Produit avec :</strong> Claude Sonnet 4.6 (Anthropic) — juin 2026</p>
 </div>
 
