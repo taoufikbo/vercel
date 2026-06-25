@@ -192,6 +192,7 @@
     <li><a href="#support">Souveraineté du support opérationnel</a></li>
     <li><a href="#opensource">Contributions open source et dépendance aux acteurs US</a></li>
     <li><a href="#cncf">La CNCF et la Linux Foundation : la dépendance systémique ignorée</a></li>
+    <li><a href="#precedents">Précédents documentés : quand les États-Unis ont activé le mécanisme</a></li>
     <li><a href="#synthese">Synthèse scorée et recommandations</a></li>
   </ol>
 </div>
@@ -545,9 +546,46 @@
   <p>Le Governing Board de la CNCF est composé de représentants des membres platine et gold. Les membres platine 2025-2026 incluent Google, Amazon, Microsoft, Red Hat, VMware, Alibaba, Apple, Arm, Cisco. La majorité des sièges sont tenus par des entités américaines. Sous pression politique, les États-Unis pourraient théoriquement influencer les décisions de gouvernance — y compris les standards de conformité ou l'accès au programme de certification "Certified Kubernetes".</p>
 </div>
 
-<!-- SECTION 8 -->
+<!-- SECTION 8 — PRÉCÉDENTS -->
+<div class="section" id="precedents">
+  <h2>8. Précédents documentés : quand les États-Unis ont activé le mécanisme</h2>
+  <p>L'extraterritorialité du droit américain n'est pas une menace théorique. Elle a été activée à plusieurs reprises, dans des contextes différents, démontrant à chaque fois que la nationalité juridique de l'entité — et non la localisation géographique des données ou des opérations — est le déclencheur.</p>
+
+  <h3>Précédent 1 — Russie, mars 2022 : coupure commerciale immédiate (Red Hat et SUSE)</h3>
+  <p>Au lendemain de l'invasion de l'Ukraine, Red Hat et SUSE ont toutes deux suspendu leurs ventes et services en Russie et en Biélorussie en l'espace de 48 heures. Red Hat a été explicite : l'entreprise a pris des mesures <em>au-delà</em> de ce qu'imposaient strictement les sanctions OFAC en vigueur — c'était un choix commercial volontaire d'une entité américaine, non une obligation légale stricte à ce moment précis.</p>
+  <p>Conséquences opérationnelles côté russe : les abonnements OCP et RHEL en cours d'exécution ont continué de fonctionner jusqu'à leur expiration naturelle, mais sans possibilité de renouvellement, sans support, et sans accès aux mises à jour de sécurité. Les pull secrets expirant progressivement, les clusters OCP se sont retrouvés dans un état dégradé sans possibilité de remédiation officielle. La Russie a alors <strong>légalisé le "piratage" logiciel</strong> pour les éditeurs de pays sanctionneurs, et a migré massivement vers AlmaLinux et Rocky Linux — forks RHEL-compatibles qui ne dépendent d'aucun abonnement Red Hat.</p>
+  <div class="alert alert-warn"><strong>Signal structurel :</strong> Red Hat Inc. a coupé l'accès sans y être strictement contraint par les sanctions OFAC du moment — par anticipation et par choix. Une entité américaine peut donc agir bien en deçà du seuil légal d'obligation. Pour un opérateur télécoms européen ayant des activités dans des géographies sous tension géopolitique, ce précédent illustre que la dépendance à un fournisseur US ne repose pas uniquement sur ce que la loi impose — mais aussi sur ce que l'entreprise choisit de faire.</div>
+
+  <h3>Précédent 2 — Russie, octobre 2024 : retrait de mainteneurs kernel Linux (Linux Foundation)</h3>
+  <p>En octobre 2024, la Linux Foundation — entité parente de la CNCF — a supprimé une douzaine de mainteneurs russes du fichier MAINTAINERS officiel du kernel Linux, citant des exigences de conformité OFAC. Les lawyers de la LF ont précisé que l'objectif était d'exclure les contributeurs liés à des entreprises figurant sur les listes SDN de l'OFAC, soumises à un programme de sanctions OFAC, ou détenues à plus de 50% par une telle entité.</p>
+  <p>Ce précédent est capital pour la CNCF : c'est la <strong>même entité juridique</strong> (Linux Foundation, 501(c)6, San Francisco) qui gouverne Kubernetes, containerd, et tous les projets CNCF. Le mécanisme d'exclusion de contributeurs a été activé, testé, et documenté. Il n'a pas concerné les Chinois jusqu'ici — parce que Huawei est sur l'Entity List BIS (export controls sur les ventes vers Huawei), non sur la liste SDN OFAC (qui cible les transactions avec Huawei). Mais en cas d'escalade géopolitique majeure amenant des entités chinoises tech sur la liste SDN, le même mécanisme pourrait s'appliquer à Huawei, premier contributeur Kubernetes en Asie.</p>
+
+  <h3>Précédent 3 — GitHub 2019 : coupure d'accès aux développeurs de pays sanctionnés</h3>
+  <p>GitHub (Microsoft) a bloqué en 2019 l'accès aux dépôts privés et aux services payants pour les développeurs résidant en Iran, Syrie, Crimée, Cuba et Corée du Nord — en se basant sur l'adresse IP et l'historique de paiement, indépendamment de la nationalité ou de l'origine ethnique. GitHub héberge le code source de Kubernetes et de tous les projets CNCF. Un développeur basé dans un pays sanctionné pourrait voir son accès aux outils de contribution restreint, même s'il contribue à un projet "neutre".</p>
+
+  <h3>Précédent 4 — France, 2010-2016 : les entreprises françaises comme cibles de l'extraterritorialité US</h3>
+  <p>Ce précédent est le plus directement parlant pour un contexte Orange/télécoms France. Les autorités américaines (DOJ, OFAC, SEC) ont infligé aux grands groupes français plus de <strong>14 milliards de dollars d'amendes</strong> sur la période 2010-2016, sur la base de l'extraterritorialité du droit américain. Le déclencheur légal est d'une largeur remarquable : il suffit d'effectuer une transaction en dollars, d'utiliser le système de messagerie américain, ou d'utiliser une technologie américaine pour tomber sous la juridiction des tribunaux US.</p>
+
+  <table class="comp-table">
+    <tr><th>Entreprise</th><th>Année</th><th>Motif</th><th>Montant</th></tr>
+    <tr><td class="dim-cell">Technip</td><td>2010</td><td>FCPA — corruption à l'étranger</td><td>137 M$</td></tr>
+    <tr><td class="dim-cell">Alcatel-Lucent</td><td>2010</td><td>FCPA — corruption à l'étranger</td><td>137 M$</td></tr>
+    <tr><td class="dim-cell">Total</td><td>2013</td><td>FCPA — corruption Iran/sanctions</td><td>245 M$</td></tr>
+    <tr><td class="dim-cell">BNP Paribas</td><td>2014</td><td>OFAC — contournement sanctions Iran, Soudan, Cuba, Birmanie (2005-2012)</td><td style="color:var(--danger);font-weight:600">8,9 Md$ (dont 963 M$ OFAC)</td></tr>
+    <tr><td class="dim-cell">Alstom</td><td>2014</td><td>FCPA — corruption (record historique à l'époque) — parallèle avec rachat branche énergie par GE</td><td style="color:var(--danger);font-weight:600">772 M$</td></tr>
+    <tr><td class="dim-cell">Crédit Agricole</td><td>2015</td><td>OFAC — contournement sanctions</td><td>329 M$</td></tr>
+  </table>
+
+  <div class="alert alert-danger"><strong>Ce que ce précédent signifie pour l'analyse SUSE/Red Hat :</strong> BNP Paribas était une banque française, opérant depuis Paris et Genève, effectuant des transactions qui ne touchaient pas le territoire américain — mais qui transitaient par le dollar. L'OFAC a appliqué ses sanctions. Dans le contexte d'une infrastructure 5G Core critique, la dépendance à Red Hat Inc. (Delaware) pour les abonnements, les pull secrets, et les mises à jour de sécurité crée exactement le type de "touchpoint américain" que l'OFAC considère comme suffisant pour exercer sa juridiction. Ce n'est pas la même nature de risque que BNP Paribas — mais c'est la même logique extraterritoriale appliquée à un autre domaine.</div>
+
+  <h3>Qu'est-ce que l'OFAC — mémo de cadrage</h3>
+  <p>L'<strong>OFAC</strong> (Office of Foreign Assets Control) est la direction du Trésor américain chargée d'administrer et d'appliquer les sanctions économiques des États-Unis. Sa liste la plus connue est la <strong>SDN List</strong> (Specially Designated Nationals) : toute entité qui y figure voit ses avoirs bloqués, et les entités américaines ont l'interdiction générale de traiter avec elles — y compris leur vendre des logiciels, accepter leurs contributions de code, ou signer un CLA avec elles. La portée est extraterritoriale : une entité américaine qui traite avec un SDN risque des sanctions même si la transaction se passe hors des États-Unis.</p>
+  <p>Il faut distinguer l'OFAC de l'<strong>Entity List BIS</strong> (Bureau of Industry and Security, dépend du Commerce) : cette dernière cible les <em>exportations</em> de technologies américaines vers des entités jugées risquées — c'est sous ce régime que Huawei est listé depuis 2019, mais elle ne bloque pas les contributions open source entrantes depuis Huawei. L'OFAC SDN est bidirectionnel et plus absolu — c'est pourquoi l'inscription d'entités russes sur la SDN a déclenché le retrait de mainteneurs kernel en 2024, alors que l'Entity List BIS appliquée à Huawei ne l'a pas fait pour les contributeurs chinois.</p>
+</div>
+
+<!-- SECTION 9 -->
 <div class="section" id="synthese">
-  <h2>8. Synthèse scorée et recommandations</h2>
+  <h2>9. Synthèse scorée et recommandations</h2>
   <p style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:13px;color:var(--text3);margin-bottom:1.25rem;">Évaluation basée sur l'analyse juridique, les annonces publiques vérifiées, et l'architecture documentée des solutions. Score 10 = souveraineté complète et vérifiable.</p>
 
   <div class="scores">
@@ -626,7 +664,7 @@
 </div>
 
 <div class="footnotes">
-  <p><strong>Sources :</strong> SUSE Communities blog (Andreas Prins, mai 2026) · Red Hat Summit 2026 (BusinessWire, mai 2026) · Red Hat Confirmed Sovereign Support GA (Red Hat blog, avril 2026) · EQT Private Equity Co LLC Form 10-K/10-Q (SEC.gov, 2024-2025) · SUSE Investor Relations (délisting nov. 2023) · CNCF Charter (cncf.io) · Linux Foundation Trademarks (linuxfoundation.org) · Rancher vs OpenShift (cloudfleet.ai, avril 2026) · Red Hat Licensing Model (redwoodcompliance.com, 2025) · CLOUD Act analysis (dzone.com, Osler, Linklaters)</p>
+  <p><strong>Sources :</strong> SUSE Communities blog (Andreas Prins, mai 2026) · Red Hat Summit 2026 (BusinessWire, mai 2026) · Red Hat Confirmed Sovereign Support GA (Red Hat blog, avril 2026) · EQT Private Equity Co LLC Form 10-K/10-Q (SEC.gov, 2024-2025) · SUSE Investor Relations (délisting nov. 2023) · CNCF Charter (cncf.io) · Linux Foundation Trademarks (linuxfoundation.org) · Rancher vs OpenShift (cloudfleet.ai, avril 2026) · Red Hat Licensing Model (redwoodcompliance.com, 2025) · CLOUD Act analysis (dzone.com, Osler, Linklaters) · Linux Foundation OFAC sanctions advisory (linuxfoundation.org, janv. 2025) · Russian kernel maintainers removal (Software Freedom Conservancy, déc. 2024 · socket.dev, 2025) · GitHub trade controls (docs.github.com) · Red Hat Russia withdrawal (theregister.com, mars 2022) · BNP Paribas OFAC settlement (US Treasury, juin 2014) · Alstom FCPA guilty plea (DOJ, déc. 2014) · Extraterritorialité du droit américain (Rapport Assemblée nationale n°4082, 2016) · FCPA cas français (Sénat rapport n°755, 2021)</p>
   <p><strong>Produit avec :</strong> Claude Sonnet 4.6 (Anthropic) — juin 2026</p>
 </div>
 
