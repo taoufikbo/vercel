@@ -184,6 +184,7 @@
 <div class="toc">
   <div class="toc-title">Sommaire</div>
   <ol>
+    <li><a href="#cadre">Note méthodologique — qualifier avant d'adopter</a></li>
     <li><a href="#exec">Executive summary</a></li>
     <li><a href="#concepts">Les deux souverainetés — ce que SUSE et Red Hat en disent</a></li>
     <li><a href="#juridique">Cadre juridique : CLOUD Act, Patriot Act, chaîne d'actionnariat</a></li>
@@ -195,6 +196,91 @@
     <li><a href="#precedents">Précédents documentés : quand les États-Unis ont activé le mécanisme</a></li>
     <li><a href="#synthese">Synthèse scorée et recommandations</a></li>
   </ol>
+</div>
+
+<!-- NOTE MÉTHODOLOGIQUE -->
+<div class="section" id="cadre" style="margin-bottom:2.5rem;">
+  <h2>Note méthodologique — qualifier avant d'adopter</h2>
+
+  <p>Cette analyse applique une grille de qualification issue d'une tradition ancienne de rigueur terminologique : avant d'adopter un paradigme, vérifier que les parties prenantes partagent bien la même définition du concept — et non seulement le même mot.</p>
+
+  <p>L'industrie technologique souffre d'un déficit de qualification systématique. Quand les adoptions échouent, elle invente des métaphores pour nommer l'échec <em>après coup</em> : "distributed monolith" pour les microservices qui ne le sont pas, "lift-and-shift" pour le cloud qui n'en est pas, "cargo cult agile" pour la transformation qui n'a pas eu lieu. Ces métaphores diagnostiquent ; elles ne préviennent pas.</p>
+
+  <p>Le problème sous-jacent est toujours le même : des acteurs utilisent les mêmes mots avec des définitions incompatibles, et la ressemblance de surface entre sens commun et sens technique crée une illusion de consensus. C'est ce qu'on peut appeler la <strong>fausse familiarité</strong> — plus dangereuse que l'ignorance totale, car elle supprime le signal d'alerte qui devrait déclencher la vérification.</p>
+
+  <p>Pour structurer la qualification, on distingue trois niveaux :</p>
+
+  <div class="grid2" style="margin: 1.25rem 0;">
+    <div class="vendor-card" style="border-left: 4px solid #1a3a2a;">
+      <div class="vc-label" style="color:#1a3a2a;">Constituants essentiels</div>
+      <p style="font-size:13px;color:var(--text2);line-height:1.65;">Les éléments sans lesquels le concept n'existe tout simplement pas — quelle que soit l'étiquette utilisée. Leur absence est rédhibitoire et non négociable. Un déploiement peut s'appeler "souverain" ; s'il manque un constituant essentiel, il ne l'est pas.</p>
+    </div>
+    <div class="vendor-card" style="border-left: 4px solid #1a2a5a;">
+      <div class="vc-label" style="color:#1a2a5a;">Conditions opérationnelles</div>
+      <p style="font-size:13px;color:var(--text2);line-height:1.65;">Les éléments nécessaires au bon fonctionnement. Leur absence ne disqualifie pas le concept mais produit une implémentation dégradée ou incomplète. Ce sont des indicateurs de maturité, pas de nature.</p>
+    </div>
+  </div>
+  <div class="vendor-card" style="border-left: 4px solid var(--danger); margin-bottom: 1.25rem;">
+    <div class="vc-label" style="color:var(--danger);">Invalidateurs</div>
+    <p style="font-size:13px;color:var(--text2);line-height:1.65;">Les patterns dont la présence disqualifie le concept même si les constituants essentiels semblent réunis. Ce sont les modes de self-deception les plus courants — les situations où l'organisation croit avoir adopté le paradigme alors qu'elle l'a simulé.</p>
+  </div>
+
+  <p>La logique de qualification est <strong>binaire, non continue</strong> : soit les constituants essentiels sont présents et aucun invalidateur n'est actif — auquel cas l'implémentation est une instance du concept — soit elle ne l'est pas. Il n'existe pas de "souveraineté à 70%". Il existe des implémentations complètes, des implémentations défectueuses (conditions opérationnelles absentes), et des simulations (constituants essentiels absents ou invalidateurs présents).</p>
+
+  <div class="alert alert-warn"><strong>Le terme central : "souveraineté numérique" — deux définitions en collision</strong><br><br>
+  <strong>Sens commun (fausse familiarité) :</strong> "Nos données restent en Europe, nos serveurs sont sur notre sol, on a choisi un éditeur qui n'est pas américain."<br><br>
+  <strong>Sens technique réel :</strong> "Capacité d'une organisation à maintenir, opérer, mettre à jour et faire évoluer une infrastructure critique de façon autonome et durable, sans qu'un tiers étranger puisse interrompre, dégrader ou contraindre cet usage par voie juridique, commerciale ou technique."<br><br>
+  L'écart entre les deux définitions est l'objet de l'intégralité de cette analyse. Ni SUSE ni Red Hat ne comblent cet écart — pour des raisons structurelles que la chaîne juridique, les mécanismes de blocage, et les dépendances fondationnelles documentées ci-après démontrent.</div>
+
+  <h3>Verdict de qualification préalable</h3>
+  <p style="font-size:14px;color:var(--text2);margin-bottom:1rem;">Appliqué au terme "souveraineté numérique", le cadre produit le tableau suivant. Chaque ligne est documentée et justifiée dans les sections qui suivent.</p>
+
+  <table class="comp-table">
+    <tr><th>Niveau</th><th>Critère</th><th class="suse-th">SUSE / RKE2</th><th class="rh-th">Red Hat OCP</th></tr>
+    <tr>
+      <td class="dim-cell" rowspan="4" style="font-size:12px;">Constituants<br>essentiels</td>
+      <td style="font-size:13px;color:var(--text2);">Indépendance juridique de la chaîne</td>
+      <td style="font-size:13px;"><span class="tag tag-warn">Partiel</span> EQT Delaware</td>
+      <td style="font-size:13px;"><span class="tag tag-danger">Absent</span> IBM Delaware</td>
+    </tr>
+    <tr>
+      <td style="font-size:13px;color:var(--text2);">Continuité sans abonnement actif</td>
+      <td style="font-size:13px;"><span class="tag tag-ok">Présent</span> Apache 2.0</td>
+      <td style="font-size:13px;"><span class="tag tag-warn">Dégradé</span> Pull secret expire</td>
+    </tr>
+    <tr>
+      <td style="font-size:13px;color:var(--text2);">Maintenance autonome sans le vendor</td>
+      <td style="font-size:13px;"><span class="tag tag-ok">Présent</span> Code source ouvert</td>
+      <td style="font-size:13px;"><span class="tag tag-danger">Absent</span> RHCOS + Portal US</td>
+    </tr>
+    <tr>
+      <td style="font-size:13px;color:var(--text2);">Absence de kill switch externe</td>
+      <td style="font-size:13px;"><span class="tag tag-ok">Présent</span> Pas de mécanisme bloquant</td>
+      <td style="font-size:13px;"><span class="tag tag-danger">Absent</span> Pull secret révocable</td>
+    </tr>
+    <tr>
+      <td class="dim-cell" rowspan="3" style="font-size:12px;">Invalidateurs</td>
+      <td style="font-size:13px;color:var(--text2);">Actionnaire US avec contrôle effectif</td>
+      <td style="font-size:13px;"><span class="tag tag-warn">Actif</span> EQT Partners Inc. Delaware</td>
+      <td style="font-size:13px;"><span class="tag tag-danger">Actif</span> IBM Corp. New York</td>
+    </tr>
+    <tr>
+      <td style="font-size:13px;color:var(--text2);">Marque fondationnelle déposée USPTO</td>
+      <td colspan="2" style="font-size:13px;text-align:center;"><span class="tag tag-danger">Actif pour les deux</span> "Kubernetes" — Linux Foundation, USPTO</td>
+    </tr>
+    <tr>
+      <td style="font-size:13px;color:var(--text2);">Gouvernance fondationnelle de droit US</td>
+      <td colspan="2" style="font-size:13px;text-align:center;"><span class="tag tag-danger">Actif pour les deux</span> CNCF = sous-fondation Linux Foundation, San Francisco</td>
+    </tr>
+    <tr>
+      <td class="dim-cell" style="font-weight:700;">Verdict</td>
+      <td style="font-size:13px;color:var(--text2);">Instance de souveraineté numérique réelle ?</td>
+      <td style="font-size:13px;font-weight:600;color:var(--warn);">Non. Invalidateurs actifs. Souveraineté partielle de fait sur le périmètre on-premise uniquement.</td>
+      <td style="font-size:13px;font-weight:600;color:var(--danger);">Non. Constituants essentiels absents + invalidateurs actifs.</td>
+    </tr>
+  </table>
+
+  <p style="margin-top:1rem;">Ce verdict structure la lecture des sections suivantes. L'analyse n'est pas un catalogue de risques — c'est la démonstration progressive, précédent par précédent, que les invalidateurs sont réels et que les mécanismes d'activation ont déjà fonctionné.</p>
 </div>
 
 <!-- EXECUTIVE SUMMARY -->
